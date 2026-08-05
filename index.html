@@ -1,0 +1,809 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth overflow-x-hidden">
+<head>
+    <meta charset="UTF-8">
+    <!-- MOBILE ZOOM FIX: Disables unwanted viewport pinch-zoom & auto scaling -->
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Forex 7 sTarZ | Aziz - Senior Trader & Systems Developer</title>
+    
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Font Awesome Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;600;700;800&display=swap" rel="stylesheet">
+    <!-- Three.js for Interactive 3D Background -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ['"Plus Jakarta Sans"', 'sans-serif'],
+                    },
+                    colors: {
+                        darkBg: '#030712',
+                        cardBg: '#080d1a',
+                        accentEmerald: '#10b981',
+                        accentCyan: '#06b6d4',
+                        accentGold: '#f59e0b',
+                        accentSky: '#0284c7',
+                    },
+                    boxShadow: {
+                        'neon-emerald': '0 0 20px rgba(16, 185, 129, 0.35)',
+                        'neon-sky': '0 0 20px rgba(14, 165, 233, 0.35)',
+                        'neon-gold': '0 0 20px rgba(245, 158, 11, 0.35)',
+                        'glass-card': '0 25px 50px -12px rgba(0, 0, 0, 0.7), inset 0 1px 0 rgba(255, 255, 255, 0.12)',
+                    }
+                }
+            }
+        }
+    </script>
+
+    <style>
+        /* Strict Mobile Viewport & Smooth Touch Fixes */
+        html, body {
+            max-width: 100vw;
+            overflow-x: hidden !important;
+            touch-action: manipulation;
+            perspective: 800px;
+        }
+
+        @media (min-width: 768px) {
+            html, body {
+                perspective: 1200px;
+            }
+        }
+
+        .glass-panel {
+            background: rgba(8, 13, 26, 0.85);
+            backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            transform-style: preserve-3d;
+            will-change: transform;
+        }
+
+        /* Safe Mobile-Friendly 3D Tilt Card Base */
+        .tilt-card {
+            transition: transform 0.2s cubic-bezier(0.25, 1, 0.5, 1), box-shadow 0.3s ease;
+            transform-style: preserve-3d;
+            touch-action: pan-y;
+        }
+
+        .tilt-card .depth-layer {
+            transform: translateZ(20px);
+            transition: transform 0.2s ease-out;
+        }
+
+        .tilt-card .depth-layer-deep {
+            transform: translateZ(35px);
+            transition: transform 0.2s ease-out;
+        }
+
+        /* Mobile Drawer 3D Animation Fix */
+        #mobile-drawer {
+            transition: transform 0.35s cubic-bezier(0.16, 1, 0.3, 1), opacity 0.25s ease;
+            transform-style: preserve-3d;
+        }
+        #mobile-drawer.drawer-closed {
+            transform: translateX(100%) rotateY(-15deg);
+            opacity: 0;
+            pointer-events: none;
+        }
+        #mobile-drawer.drawer-open {
+            transform: translateX(0) rotateY(0deg);
+            opacity: 1;
+            pointer-events: auto;
+        }
+
+        /* Dynamic Visual Glowing Effects */
+        @keyframes pulseGlow {
+            0%, 100% { opacity: 0.3; transform: scale(1); }
+            50% { opacity: 0.6; transform: scale(1.05); }
+        }
+
+        .pulse-glow {
+            animation: pulseGlow 4s infinite ease-in-out;
+        }
+
+        ::-webkit-scrollbar { width: 5px; }
+        ::-webkit-scrollbar-track { background: #030712; }
+        ::-webkit-scrollbar-thumb { background: #1e293b; border-radius: 4px; }
+        ::-webkit-scrollbar-thumb:hover { background: #10b981; }
+    </style>
+</head>
+<body class="bg-darkBg text-slate-200 font-sans antialiased selection:bg-accentEmerald selection:text-black relative overflow-x-hidden w-full">
+
+    <!-- 3D Interactive Canvas Background -->
+    <div id="canvas-container" class="fixed inset-0 pointer-events-none z-0 opacity-50 overflow-hidden"></div>
+
+    <!-- Top Live Market Ticker -->
+    <div class="relative z-40 bg-slate-950/90 border-b border-slate-800/80 text-[10px] sm:text-[11px] py-1.5 px-3 text-center text-slate-300 font-medium backdrop-blur-md">
+        <span class="inline-flex items-center gap-1.5">
+            <span class="w-2 h-2 rounded-full bg-emerald-400 animate-ping"></span>
+            <b>FOREX 7 STARZ ECOSYSTEM</b> • 24/7 Gold (XAU/USD) & Multi-Asset Live Signal Hub
+        </span>
+    </div>
+
+    <!-- Header / Navbar -->
+    <header class="sticky top-0 z-40 glass-panel border-b border-slate-800/80">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-16 flex items-center justify-between">
+            
+            <!-- LOGO SECTION -->
+            <a href="#" class="flex items-center gap-2 group">
+                <div class="w-8 h-8 sm:w-9 sm:h-9 rounded-lg bg-emerald-500/10 border border-emerald-500/40 flex items-center justify-center text-emerald-400 shadow-neon-emerald">
+                    <i class="fas fa-star text-base sm:text-lg"></i>
+                </div>
+                <div>
+                    <span class="text-base sm:text-lg font-extrabold text-white tracking-wide">Forex<span class="text-emerald-400">7sTarZ</span></span>
+                    <span class="block text-[8px] sm:text-[9px] text-amber-400 font-semibold uppercase tracking-widest -mt-1">24/7 VIP Signals</span>
+                </div>
+            </a>
+
+            <!-- Desktop Nav Links -->
+            <nav class="hidden lg:flex items-center gap-6 text-xs font-semibold text-slate-300">
+                <a href="#about" class="hover:text-emerald-400 transition-colors">Trader Profile</a>
+                <a href="#markets" class="hover:text-emerald-400 transition-colors">Markets</a>
+                <a href="#platforms" class="hover:text-emerald-400 transition-colors">Trading Apps</a>
+                <a href="#contact" class="hover:text-emerald-400 transition-colors">VIP Contact</a>
+            </nav>
+
+            <!-- Top Right Action Buttons (SMALL COMPACT ICONS) -->
+            <div class="flex items-center gap-1.5 sm:gap-2">
+                <!-- WhatsApp Icon Button -->
+                <a href="https://wa.me/923093958600?text=i%20will%20contact%20from%20fx7starz%20site" target="_blank" title="WhatsApp Support" class="w-8 h-8 rounded-lg bg-emerald-500/20 hover:bg-emerald-500 border border-emerald-500/40 text-emerald-400 hover:text-black font-bold text-xs transition-all flex items-center justify-center shadow-neon-emerald">
+                    <i class="fab fa-whatsapp text-sm"></i>
+                </a>
+
+                <!-- Telegram Icon Button -->
+                <a href="https://t.me/fx_support9?text=i%20will%20contact%20from%20fx7starz%20site" target="_blank" title="Telegram Support" class="w-8 h-8 rounded-lg bg-sky-500/20 hover:bg-sky-400 border border-sky-500/40 text-sky-400 hover:text-black font-bold text-xs transition-all flex items-center justify-center shadow-neon-sky">
+                    <i class="fab fa-telegram text-sm"></i>
+                </a>
+
+                <!-- VIP Exness Partner Button -->
+                <a href="https://one.exnessonelink.com/a/vtkbbmje" target="_blank" class="bg-gradient-to-r from-amber-500 to-emerald-500 hover:from-amber-400 hover:to-emerald-400 text-black font-extrabold px-2 sm:px-2.5 py-1.5 rounded-lg text-xs transition-all shadow-neon-gold flex items-center gap-1">
+                    <i class="fas fa-crown text-[10px]"></i>
+                    <span class="hidden sm:inline">VIP</span>
+                </a>
+                
+                <!-- Menu Drawer Toggle Button -->
+                <button id="drawer-toggle-btn" onclick="toggleDrawer()" class="p-1.5 px-2 rounded-lg bg-slate-800/80 hover:bg-slate-700 text-emerald-400 border border-slate-700 transition-all flex items-center gap-1 text-xs font-bold">
+                    <i class="fas fa-bars-staggered text-sm"></i>
+                </button>
+            </div>
+        </div>
+    </header>
+
+    <!-- MOBILE DRAWER OVERLAY -->
+    <div id="drawer-backdrop" onclick="toggleDrawer()" class="fixed inset-0 bg-black/80 backdrop-blur-md z-50 opacity-0 pointer-events-none transition-opacity duration-300"></div>
+    
+    <!-- FIXED DRAWER (Always visible buttons on top/bottom without layout cut) -->
+    <aside id="mobile-drawer" class="drawer-closed fixed top-0 right-0 h-full w-80 max-w-[88vw] glass-panel border-l border-emerald-500/30 shadow-2xl z-50 p-4 sm:p-5 flex flex-col justify-between">
+        
+        <!-- Scrollable Top & Middle Content -->
+        <div class="overflow-y-auto pr-1 space-y-4">
+            <!-- Drawer Header -->
+            <div class="flex items-center justify-between border-b border-slate-800 pb-3">
+                <div class="flex items-center gap-2">
+                    <div class="w-7 h-7 rounded-lg bg-emerald-500/20 border border-emerald-500/40 flex items-center justify-center text-emerald-400">
+                        <i class="fas fa-star text-xs"></i>
+                    </div>
+                    <div>
+                        <span class="font-extrabold text-white text-xs tracking-wider block">Forex<span class="text-emerald-400">7sTarZ</span></span>
+                        <span class="text-[8px] text-amber-400 font-bold uppercase tracking-widest block -mt-1">24/7 VIP Hub</span>
+                    </div>
+                </div>
+                <button onclick="toggleDrawer()" class="w-7 h-7 rounded-full bg-slate-800 text-slate-400 hover:text-white flex items-center justify-center transition-colors">
+                    <i class="fas fa-times text-xs"></i>
+                </button>
+            </div>
+
+            <!-- Profile Badge -->
+            <div class="p-2.5 rounded-xl bg-slate-900/90 border border-slate-800 flex items-center gap-2.5">
+                <div class="w-8 h-8 rounded-full bg-emerald-500/20 flex items-center justify-center text-emerald-400 font-bold border border-emerald-500/30 text-xs">
+                    A7
+                </div>
+                <div>
+                    <div class="text-xs font-bold text-white">Aziz (Forex7sTarZ)</div>
+                    <div class="text-[10px] text-amber-400 font-semibold">Senior Trader & Algo Developer</div>
+                </div>
+            </div>
+
+            <!-- Drawer Nav Links -->
+            <div class="space-y-1">
+                <div class="text-[9px] font-extrabold text-slate-500 uppercase tracking-widest px-2 mb-1">Quick Links</div>
+                <a href="#about" onclick="toggleDrawer()" class="flex items-center gap-2.5 px-3 py-2 rounded-lg hover:bg-emerald-500/10 text-slate-300 hover:text-emerald-400 text-xs font-semibold transition-all">
+                    <i class="fas fa-user-tie text-emerald-400 w-4"></i> Trader Profile
+                </a>
+                <a href="#markets" onclick="toggleDrawer()" class="flex items-center gap-2.5 px-3 py-2 rounded-lg hover:bg-emerald-500/10 text-slate-300 hover:text-emerald-400 text-xs font-semibold transition-all">
+                    <i class="fas fa-chart-line text-amber-400 w-4"></i> Markets Traded
+                </a>
+                <a href="#platforms" onclick="toggleDrawer()" class="flex items-center gap-2.5 px-3 py-2 rounded-lg hover:bg-emerald-500/10 text-slate-300 hover:text-emerald-400 text-xs font-semibold transition-all">
+                    <i class="fas fa-laptop-code text-cyan-400 w-4"></i> Trading Applications
+                </a>
+                <a href="#contact" onclick="toggleDrawer()" class="flex items-center gap-2.5 px-3 py-2 rounded-lg hover:bg-emerald-500/10 text-slate-300 hover:text-emerald-400 text-xs font-semibold transition-all">
+                    <i class="fas fa-headset text-purple-400 w-4"></i> VIP Support
+                </a>
+            </div>
+
+            <!-- Signal Categories -->
+            <div class="space-y-1">
+                <div class="text-[9px] font-extrabold text-slate-500 uppercase tracking-widest px-2 mb-1">Signal Categories</div>
+                <div class="grid grid-cols-2 gap-1.5 text-[10px]">
+                    <span class="p-1.5 rounded-lg bg-amber-500/10 border border-amber-500/20 text-amber-400 font-bold text-center">XAU/USD Gold</span>
+                    <span class="p-1.5 rounded-lg bg-emerald-500/10 border border-emerald-500/20 text-emerald-400 font-bold text-center">Forex Majors</span>
+                    <span class="p-1.5 rounded-lg bg-cyan-500/10 border border-cyan-500/20 text-cyan-400 font-bold text-center">Crypto Yield</span>
+                    <span class="p-1.5 rounded-lg bg-purple-500/10 border border-purple-500/20 text-purple-400 font-bold text-center">Deriv Synthetic</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- ALWAYS VISIBLE FIXED BOTTOM CONTACT BUTTONS -->
+        <div class="pt-3 border-t border-slate-800/90 space-y-1.5 mt-2 bg-darkBg/50 backdrop-blur-xs">
+            <div class="text-[9px] font-extrabold text-slate-400 uppercase tracking-widest px-1 mb-1">Instant VIP Contact</div>
+            
+            <a href="https://wa.me/923093958600?text=i%20will%20contact%20from%20fx7starz%20site" target="_blank" class="w-full bg-emerald-500 hover:bg-emerald-400 text-black font-extrabold py-2 rounded-xl text-xs flex items-center justify-center gap-1.5 transition-colors shadow-neon-emerald">
+                <i class="fab fa-whatsapp text-sm"></i> WhatsApp Support
+            </a>
+            
+            <a href="https://t.me/fx_support9?text=i%20will%20contact%20from%20fx7starz%20site" target="_blank" class="w-full bg-sky-500 hover:bg-sky-400 text-black font-extrabold py-2 rounded-xl text-xs flex items-center justify-center gap-1.5 transition-colors shadow-neon-sky">
+                <i class="fab fa-telegram text-sm"></i> Telegram VIP Channel
+            </a>
+
+            <div class="grid grid-cols-2 gap-1.5 pt-0.5">
+                <a href="mailto:mybusiness309@gmail.com" class="bg-slate-800 hover:bg-slate-700 text-slate-200 border border-slate-700 font-bold py-1.5 rounded-lg text-[11px] flex items-center justify-center gap-1 transition-colors">
+                    <i class="fas fa-envelope text-cyan-400 text-xs"></i> Email
+                </a>
+                <a href="https://one.exnessonelink.com/a/vtkbbmje" target="_blank" class="bg-gradient-to-r from-amber-500 to-emerald-500 hover:from-amber-400 hover:to-emerald-400 text-black font-extrabold py-1.5 rounded-lg text-[11px] flex items-center justify-center gap-1 transition-colors shadow-neon-gold">
+                    <i class="fas fa-crown text-xs"></i> Exness VIP
+                </a>
+            </div>
+        </div>
+    </aside>
+
+    <main class="relative z-10 w-full overflow-hidden">
+
+        <!-- Hero Section -->
+        <section id="about" class="py-10 sm:py-16 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto">
+            <div class="grid lg:grid-cols-12 gap-8 items-center">
+                
+                <div class="lg:col-span-7 space-y-4 sm:space-y-5">
+                    <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-amber-500/10 border border-amber-500/30 text-amber-400 text-[11px] font-bold uppercase tracking-wider">
+                        <i class="fas fa-star text-emerald-400"></i> Forex 7 sTarZ Official Ecosystem
+                    </div>
+                    
+                    <h1 class="text-3xl sm:text-5xl font-black text-white leading-tight">
+                        24/7 Professional <span class="text-transparent bg-clip-text bg-gradient-to-r from-emerald-400 via-cyan-400 to-amber-400">Financial Trader</span> & Signal Architect
+                    </h1>
+                    
+                    <p class="text-slate-400 text-xs sm:text-base leading-relaxed">
+                        Full-time trader specializing in Technical Analysis, Smart Money Concepts, and Automated Trading Algorithms. Delivering live high-precision 24/7 signals across Gold (XAU/USD), Forex Majors, Crypto, and Binary Synthetic Indices.
+                    </p>
+
+                    <!-- Quick Stats Cards -->
+                    <div class="grid grid-cols-2 sm:grid-cols-3 gap-2.5 pt-2">
+                        <div class="glass-panel tilt-card p-3 rounded-xl border border-slate-800 text-center">
+                            <div class="depth-layer text-lg sm:text-xl font-extrabold text-amber-400">XAU/USD</div>
+                            <div class="depth-layer text-[10px] text-slate-400">Gold Precision Setup</div>
+                        </div>
+                        <div class="glass-panel tilt-card p-3 rounded-xl border border-slate-800 text-center">
+                            <div class="depth-layer text-lg sm:text-xl font-extrabold text-emerald-400">24/7 VIP</div>
+                            <div class="depth-layer text-[10px] text-slate-400">Active Signals</div>
+                        </div>
+                        <div class="glass-panel tilt-card p-3 rounded-xl border border-slate-800 text-center col-span-2 sm:col-span-1">
+                            <div class="depth-layer text-lg sm:text-xl font-extrabold text-cyan-400">Multi-Asset</div>
+                            <div class="depth-layer text-[10px] text-slate-400">Forex, Crypto, Deriv</div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 3D PARALLAX PROFILE CARD SECTION -->
+                <div class="lg:col-span-5">
+                    <div class="glass-panel tilt-card p-5 sm:p-6 rounded-3xl border border-slate-700/80 shadow-glass-card text-center relative overflow-hidden group max-w-sm mx-auto">
+                        <!-- Background Glow Blob -->
+                        <div class="pulse-glow absolute -top-10 -right-10 w-32 h-32 bg-amber-500/20 rounded-full blur-2xl pointer-events-none"></div>
+                        <div class="pulse-glow absolute -bottom-10 -left-10 w-32 h-32 bg-emerald-500/20 rounded-full blur-2xl pointer-events-none"></div>
+                        
+                        <!-- Profile Avatar -->
+                        <div class="depth-layer-deep w-24 h-24 sm:w-28 sm:h-28 mx-auto rounded-full bg-gradient-to-tr from-amber-400 via-emerald-400 to-cyan-500 p-1 shadow-neon-gold mb-3 relative">
+                            <div class="w-full h-full rounded-full bg-slate-950 flex items-center justify-center overflow-hidden">
+                                <i class="fas fa-user-ninja text-3xl sm:text-4xl text-emerald-400"></i>
+                            </div>
+                            <span class="absolute bottom-1 right-1 w-3.5 h-3.5 rounded-full bg-emerald-500 border-2 border-slate-900 animate-pulse"></span>
+                        </div>
+
+                        <div class="depth-layer">
+                            <h2 class="text-lg sm:text-xl font-black text-white tracking-wide">Aziz (Forex7sTarZ)</h2>
+                            <p class="text-[10px] sm:text-[11px] text-emerald-400 font-bold uppercase tracking-wider mt-0.5">Lead Analyst & Systems Developer</p>
+                            
+                            <p class="text-xs text-slate-400 leading-relaxed my-3">
+                                Providing daily market breakdowns, risk-managed setups, and custom-built signal software for global traders.
+                            </p>
+                        </div>
+
+                        <!-- COMPACT PROFILE BUTTONS -->
+                        <div class="depth-layer flex items-center justify-center gap-2 pt-1">
+                            <a href="https://wa.me/923093958600?text=i%20will%20contact%20from%20fx7starz%20site" target="_blank" class="px-3.5 py-2 bg-emerald-500 hover:bg-emerald-400 text-black font-extrabold rounded-xl text-xs transition-all shadow-neon-emerald flex items-center gap-1.5">
+                                <i class="fab fa-whatsapp text-sm"></i> WhatsApp
+                            </a>
+                            <a href="https://t.me/fx_support9?text=i%20will%20contact%20from%20fx7starz%20site" target="_blank" class="px-3.5 py-2 bg-sky-500 hover:bg-sky-400 text-black font-extrabold rounded-xl text-xs transition-all shadow-neon-sky flex items-center gap-1.5">
+                                <i class="fab fa-telegram text-sm"></i> Telegram
+                            </a>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </section>
+
+        <!-- Markets Covered Section -->
+        <section id="markets" class="py-12 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto border-t border-slate-800/80">
+            <div class="text-center max-w-3xl mx-auto mb-8 space-y-1.5">
+                <span class="text-[10px] font-bold text-amber-400 uppercase tracking-widest">Trading Expertise</span>
+                <h2 class="text-2xl sm:text-3xl font-black text-white">Markets & Assets Traded</h2>
+            </div>
+
+            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+                <div class="glass-panel tilt-card p-5 rounded-2xl border border-amber-500/30 shadow-glass-card">
+                    <div class="depth-layer">
+                        <i class="fas fa-coins text-2xl text-amber-400 mb-2"></i>
+                        <h3 class="text-base font-bold text-white">XAU/USD (Gold)</h3>
+                        <p class="text-xs text-slate-400 leading-relaxed mt-1">
+                            Daily high-accuracy setups based on key liquidity zones and session volatility.
+                        </p>
+                    </div>
+                </div>
+                <div class="glass-panel tilt-card p-5 rounded-2xl border border-emerald-500/30 shadow-glass-card">
+                    <div class="depth-layer">
+                        <i class="fas fa-chart-line text-2xl text-emerald-400 mb-2"></i>
+                        <h3 class="text-base font-bold text-white">Forex Major Pairs</h3>
+                        <p class="text-xs text-slate-400 leading-relaxed mt-1">
+                            EUR/USD, GBP/USD, and USD/JPY trend tracking with disciplined risk management.
+                        </p>
+                    </div>
+                </div>
+                <div class="glass-panel tilt-card p-5 rounded-2xl border border-cyan-500/30 shadow-glass-card">
+                    <div class="depth-layer">
+                        <i class="fab fa-bitcoin text-2xl text-cyan-400 mb-2"></i>
+                        <h3 class="text-base font-bold text-white">Crypto Yield</h3>
+                        <p class="text-xs text-slate-400 leading-relaxed mt-1">
+                            Bitcoin & Altcoin trend analysis, arbitrage setups, and income strategies.
+                        </p>
+                    </div>
+                </div>
+                <div class="glass-panel tilt-card p-5 rounded-2xl border border-purple-500/30 shadow-glass-card">
+                    <div class="depth-layer">
+                        <i class="fas fa-microchip text-2xl text-purple-400 mb-2"></i>
+                        <h3 class="text-base font-bold text-white">Deriv Binary</h3>
+                        <p class="text-xs text-slate-400 leading-relaxed mt-1">
+                            Synthetic Index execution and fast volatility strategies.
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- TRADING APPLICATIONS SECTION -->
+        <section id="platforms" class="py-12 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto border-t border-slate-800/80">
+            <div class="text-center max-w-3xl mx-auto mb-10 space-y-2">
+                <span class="px-3 py-1 rounded-full bg-emerald-500/10 border border-emerald-500/30 text-emerald-400 text-[10px] font-bold uppercase tracking-widest">
+                    Web Signal Ecosystem
+                </span>
+                <h2 class="text-2xl sm:text-3xl font-black text-white">My Live Signal Platforms</h2>
+            </div>
+
+            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+
+                <!-- Platform 1 -->
+                <div class="glass-panel tilt-card rounded-2xl p-5 border border-emerald-500/30 flex flex-col justify-between shadow-glass-card">
+                    <div class="depth-layer">
+                        <div class="w-10 h-10 rounded-xl bg-emerald-500/10 border border-emerald-500/30 flex items-center justify-center text-emerald-400 text-lg font-bold mb-3 shadow-neon-emerald">
+                            <i class="fas fa-bolt"></i>
+                        </div>
+                        <span class="text-[9px] font-bold tracking-widest text-emerald-400 uppercase">Primary Terminal</span>
+                        <h3 class="text-base font-bold text-white mt-0.5 mb-1.5">Live Signals 29</h3>
+                        <p class="text-xs text-slate-400 leading-relaxed mb-5">
+                            Main portal for live categorical trading signals across Forex, Crypto, Gold, and Deriv markets.
+                        </p>
+                    </div>
+                    <div class="depth-layer-deep">
+                        <a href="http://livesignals29.online" target="_blank" class="w-full bg-emerald-500 hover:bg-emerald-400 text-black font-bold py-2 rounded-xl text-xs transition-colors flex items-center justify-center gap-1.5 shadow-neon-emerald">
+                            <span>Open Terminal</span>
+                            <i class="fas fa-external-link-alt text-[9px]"></i>
+                        </a>
+                    </div>
+                </div>
+
+                <!-- Platform 2 -->
+                <div class="glass-panel tilt-card rounded-2xl p-5 border border-cyan-500/30 flex flex-col justify-between shadow-glass-card">
+                    <div class="depth-layer">
+                        <div class="w-10 h-10 rounded-xl bg-cyan-500/10 border border-cyan-500/30 flex items-center justify-center text-cyan-400 text-lg font-bold mb-3 shadow-neon-sky">
+                            <i class="fas fa-globe"></i>
+                        </div>
+                        <span class="text-[9px] font-bold tracking-widest text-cyan-400 uppercase">Signal Mirror</span>
+                        <h3 class="text-base font-bold text-white mt-0.5 mb-1.5">Live Signal App</h3>
+                        <p class="text-xs text-slate-400 leading-relaxed mb-5">
+                            Cloud-backed web app mirror for uninterrupted live signal updates and analysis alerts.
+                        </p>
+                    </div>
+                    <div class="depth-layer-deep">
+                        <a href="https://live-signal29.vercel.app/" target="_blank" class="w-full bg-cyan-500 hover:bg-cyan-400 text-black font-bold py-2 rounded-xl text-xs transition-colors flex items-center justify-center gap-1.5 shadow-neon-sky">
+                            <span>Open Signal App</span>
+                            <i class="fas fa-external-link-alt text-[9px]"></i>
+                        </a>
+                    </div>
+                </div>
+
+                <!-- Platform 3 -->
+                <div class="glass-panel tilt-card rounded-2xl p-5 border border-amber-500/30 flex flex-col justify-between shadow-glass-card">
+                    <div class="depth-layer">
+                        <div class="w-10 h-10 rounded-xl bg-amber-500/10 border border-amber-500/30 flex items-center justify-center text-amber-400 text-lg font-bold mb-3 shadow-neon-gold">
+                            <i class="fab fa-bitcoin"></i>
+                        </div>
+                        <span class="text-[9px] font-bold tracking-widest text-amber-400 uppercase">Yield Hub</span>
+                        <h3 class="text-base font-bold text-white mt-0.5 mb-1.5">Crypto Income</h3>
+                        <p class="text-xs text-slate-400 leading-relaxed mb-5">
+                            Web interface built for cryptocurrency yield analysis, arbitrage strategies, and market ROI models.
+                        </p>
+                    </div>
+                    <div class="depth-layer-deep">
+                        <a href="https://cryptoincome.vercel.app" target="_blank" class="w-full bg-amber-500 hover:bg-amber-400 text-black font-bold py-2 rounded-xl text-xs transition-colors flex items-center justify-center gap-1.5 shadow-neon-gold">
+                            <span>Open Crypto App</span>
+                            <i class="fas fa-external-link-alt text-[9px]"></i>
+                        </a>
+                    </div>
+                </div>
+
+                <!-- Platform 4 -->
+                <div class="glass-panel tilt-card rounded-2xl p-5 border border-purple-500/30 flex flex-col justify-between shadow-glass-card">
+                    <div class="depth-layer">
+                        <div class="w-10 h-10 rounded-xl bg-purple-500/10 border border-purple-500/30 flex items-center justify-center text-purple-400 text-lg font-bold mb-3">
+                            <i class="fas fa-chart-pie"></i>
+                        </div>
+                        <span class="text-[9px] font-bold tracking-widest text-purple-400 uppercase">Deriv Execution</span>
+                        <h3 class="text-base font-bold text-white mt-0.5 mb-1.5">Flasherr App</h3>
+                        <p class="text-xs text-slate-400 leading-relaxed mb-5">
+                            Dedicated web app for fast Deriv synthetic index execution and automated volatility strategy tools.
+                        </p>
+                    </div>
+                    <div class="depth-layer-deep">
+                        <a href="https://flasherr.vercel.app/" target="_blank" class="w-full bg-purple-500 hover:bg-purple-400 text-white font-bold py-2 rounded-xl text-xs transition-colors flex items-center justify-center gap-1.5">
+                            <span>Open Flasherr</span>
+                            <i class="fas fa-external-link-alt text-[9px]"></i>
+                        </a>
+                    </div>
+                </div>
+
+            </div>
+        </section>
+        
+        <!-- TESTIMONIALS SECTION -->
+        <section id="testimonials" class="py-14 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto border-t border-cyan-500/20">
+            <div class="text-center max-w-3xl mx-auto mb-10 space-y-2">
+                <span class="px-3.5 py-1 rounded-full bg-cyan-500/10 border border-cyan-500 text-cyan-400 text-xs font-bold uppercase tracking-widest shadow-glow-cyan">
+                    Verified Feedback
+                </span>
+                <h2 class="text-2xl sm:text-4xl font-black text-white">What Traders Say About Us</h2>
+                <p class="text-slate-300 text-xs sm:text-sm">Real reviews from members using our signals and automated systems.</p>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+                <!-- Review 1 -->
+                <div class="cyber-panel cyber-panel-gold p-6 rounded-2xl flex flex-col justify-between shadow-glow-gold">
+                    <div class="space-y-3">
+                        <div class="flex items-center gap-1 text-amber-400 text-sm">
+                            <i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i>
+                        </div>
+                        <p class="text-xs text-slate-300 leading-relaxed">
+                            "Gold (XAU/USD) signals are exceptionally accurate. The London liquidity setups gave me consistent weekly profits."
+                        </p>
+                    </div>
+                    <div class="flex items-center gap-3 mt-6 pt-4 border-t border-amber-500/20">
+                        <div class="w-9 h-9 rounded-full bg-amber-500/20 border border-amber-500 flex items-center justify-center text-amber-400 font-bold text-xs">
+                            MR
+                        </div>
+                        <div>
+                            <div class="text-xs font-bold text-white">Michael R.</div>
+                            <div class="text-[10px] text-amber-400">VIP Signal Member</div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Review 2 -->
+                <div class="cyber-panel p-6 rounded-2xl flex flex-col justify-between shadow-glow-cyan">
+                    <div class="space-y-3">
+                        <div class="flex items-center gap-1 text-cyan-400 text-sm">
+                            <i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i>
+                        </div>
+                        <p class="text-xs text-slate-300 leading-relaxed">
+                            "Live Signals 29 terminal and Flasherr app are game changers for synthetic indices. Clean execution and great support!"
+                        </p>
+                    </div>
+                    <div class="flex items-center gap-3 mt-6 pt-4 border-t border-cyan-500/20">
+                        <div class="w-9 h-9 rounded-full bg-cyan-500/20 border border-cyan-500 flex items-center justify-center text-cyan-400 font-bold text-xs">
+                            AK
+                        </div>
+                        <div>
+                            <div class="text-xs font-bold text-white">Ahmed K.</div>
+                            <div class="text-[10px] text-cyan-400">Deriv & Forex Trader</div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Review 3 -->
+                <div class="cyber-panel cyber-panel-purple p-6 rounded-2xl flex flex-col justify-between shadow-glow-purple">
+                    <div class="space-y-3">
+                        <div class="flex items-center gap-1 text-purple-400 text-sm">
+                            <i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i>
+                        </div>
+                        <p class="text-xs text-slate-300 leading-relaxed">
+                            "The community investment program is transparent and rewarding. Daily earnings are credited smoothly. Highly professional!"
+                        </p>
+                    </div>
+                    <div class="flex items-center gap-3 mt-6 pt-4 border-t border-purple-500/20">
+                        <div class="w-9 h-9 rounded-full bg-purple-500/20 border border-purple-500 flex items-center justify-center text-purple-400 font-bold text-xs">
+                            JS
+                        </div>
+                        <div>
+                            <div class="text-xs font-bold text-white">Julian S.</div>
+                            <div class="text-[10px] text-purple-400">Managed Account Investor</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+        
+             <!-- COMMUNITY INVESTMENT & MANAGED ACCOUNT SECTION -->
+        <section id="invest-community" class="py-14 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto border-t border-cyan-500/20">
+            <div class="cyber-panel cyber-panel-gold rounded-3xl p-8 sm:p-12 shadow-glow-gold relative overflow-hidden">
+                <div class="absolute -top-20 -right-20 w-60 h-60 bg-amber-500/10 rounded-full blur-3xl pointer-events-none"></div>
+                <div class="absolute -bottom-20 -left-20 w-60 h-60 bg-purple-500/10 rounded-full blur-3xl pointer-events-none"></div>
+
+                <div class="grid lg:grid-cols-12 gap-8 items-center relative z-10">
+                    <div class="lg:col-span-7 space-y-4">
+                        <div class="inline-flex items-center gap-2 px-3.5 py-1 rounded-full bg-amber-500/20 border border-amber-500 text-amber-400 text-xs font-bold uppercase tracking-wider shadow-glow-gold">
+                            <i class="fas fa-crown"></i> Managed Community Account
+                        </div>
+                        <h2 class="text-2xl sm:text-4xl font-black text-white leading-tight">
+                            Invest With Our Community Account & Earn Daily
+                        </h2>
+                        <p class="text-slate-300 text-xs sm:text-sm leading-relaxed">
+                            Don't have time to trade manually? Join our pooled community trading account managed directly by professional institutional traders. Benefit from verified algorithmic setups, controlled risk parameters, and consistent daily profit sharing.
+                        </p>
+
+                        <div class="grid grid-cols-2 sm:grid-cols-3 gap-3 pt-2">
+                            <div class="p-3 rounded-xl bg-slate-950/80 border border-amber-500/30 text-center">
+                                <div class="text-amber-400 text-base font-black">Daily</div>
+                                <div class="text-[10px] text-slate-400">Profit Payouts</div>
+                            </div>
+                            <div class="p-3 rounded-xl bg-slate-950/80 border border-cyan-500/30 text-center">
+                                <div class="text-cyan-400 text-base font-black">Low Risk</div>
+                                <div class="text-[10px] text-slate-400">Risk Management</div>
+                            </div>
+                            <div class="p-3 rounded-xl bg-slate-950/80 border border-purple-500/30 text-center col-span-2 sm:col-span-1">
+                                <div class="text-purple-400 text-base font-black">24/7</div>
+                                <div class="text-[10px] text-slate-400">Transparent Tracking</div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="lg:col-span-5 flex flex-col justify-center space-y-3 bg-slate-950/90 p-6 sm:p-8 rounded-2xl border border-amber-500/40 shadow-glow-gold">
+                        <h3 class="text-lg font-bold text-white text-center">Join Investment Pool</h3>
+                        <p class="text-xs text-slate-300 text-center mb-2">Connect via WhatsApp or Telegram to discuss account sizing, terms, and onboarding instructions.</p>
+                        
+                        <a href="https://wa.me/923093958600?text=I%20want%20to%20join%20community%20investment%20account%20and%20earn%20daily" target="_blank" class="w-full bg-emerald-500 hover:bg-emerald-400 text-black font-extrabold py-3 rounded-xl text-xs flex items-center justify-center gap-2 transition-transform shadow-glow-emerald">
+                            <i class="fab fa-whatsapp text-sm"></i>
+                            <span>Join via WhatsApp</span>
+                        </a>
+                        <a href="https://t.me/fx_support9?text=I%20want%20to%20join%20community%20investment%20account%20and%20earn%20daily" target="_blank" class="w-full bg-cyan-500 hover:bg-cyan-400 text-black font-extrabold py-3 rounded-xl text-xs flex items-center justify-center gap-2 transition-transform shadow-glow-cyan">
+                            <i class="fab fa-telegram text-sm"></i>
+                            <span>Join via Telegram</span>
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- LIVE SIGNAL FEED / STATUS SECTION -->
+        <section id="signal-feed" class="py-14 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto border-t border-cyan-500/20">
+            <div class="text-center max-w-3xl mx-auto mb-10 space-y-2">
+                <span class="px-3.5 py-1 rounded-full bg-emerald-500/10 border border-emerald-500 text-emerald-400 text-xs font-bold uppercase tracking-widest shadow-glow-emerald">
+                    Real-Time Feed
+                </span>
+                <h2 class="text-2xl sm:text-4xl font-black text-white">Live Signal Status & Updates</h2>
+                <p class="text-slate-300 text-xs sm:text-sm">Recent automated market analyses dispatched to members.</p>
+            </div>
+
+            <div class="cyber-panel p-6 sm:p-8 rounded-3xl shadow-glow-cyan max-w-4xl mx-auto space-y-4">
+                <!-- Feed Item 1 -->
+                <div class="p-4 rounded-2xl bg-slate-950/80 border border-cyan-500/30 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
+                    <div class="flex items-center gap-3">
+                        <div class="w-10 h-10 rounded-xl bg-amber-500/20 border border-amber-500 flex items-center justify-center text-amber-400 font-bold">
+                            <i class="fas fa-coins text-sm"></i>
+                        </div>
+                        <div>
+                            <div class="flex items-center gap-2">
+                                <span class="text-xs font-extrabold text-white">XAU/USD (Gold) Buy Setup</span>
+                                <span class="px-2 py-0.5 rounded text-[9px] font-bold bg-emerald-500/20 text-emerald-400 border border-emerald-500/40">TARGET HIT (+65 Pips)</span>
+                            </div>
+                            <div class="text-[11px] text-slate-400 mt-0.5">Liquidity sweep confirmed near 2340 support level. Execution successful.</div>
+                        </div>
+                    </div>
+                    <span class="text-[10px] font-semibold text-cyan-400 bg-cyan-500/10 px-2.5 py-1 rounded-lg border border-cyan-500/30 self-end sm:self-center">Today, Live</span>
+                </div>
+
+                <!-- Feed Item 2 -->
+                <div class="p-4 rounded-2xl bg-slate-950/80 border border-cyan-500/30 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
+                    <div class="flex items-center gap-3">
+                        <div class="w-10 h-10 rounded-xl bg-cyan-500/20 border border-cyan-500 flex items-center justify-center text-cyan-400 font-bold">
+                            <i class="fas fa-chart-line text-sm"></i>
+                        </div>
+                        <div>
+                            <div class="flex items-center gap-2">
+                                <span class="text-xs font-extrabold text-white">EUR/USD Intraday Short</span>
+                                <span class="px-2 py-0.5 rounded text-[9px] font-bold bg-amber-500/20 text-amber-400 border border-amber-500/40">ACTIVE SETUP</span>
+                            </div>
+                            <div class="text-[11px] text-slate-400 mt-0.5">Resistance block rejection. Managing risk with trailing stop loss.</div>
+                        </div>
+                    </div>
+                    <span class="text-[10px] font-semibold text-cyan-400 bg-cyan-500/10 px-2.5 py-1 rounded-lg border border-cyan-500/30 self-end sm:self-center">2 hrs ago</span>
+                </div>
+
+                <!-- Feed Item 3 -->
+                <div class="p-4 rounded-2xl bg-slate-950/80 border border-cyan-500/30 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
+                    <div class="flex items-center gap-3">
+                        <div class="w-10 h-10 rounded-xl bg-purple-500/20 border border-purple-500 flex items-center justify-center text-purple-400 font-bold">
+                            <i class="fab fa-bitcoin text-sm"></i>
+                        </div>
+                        <div>
+                            <div class="flex items-center gap-2">
+                                <span class="text-xs font-extrabold text-white">BTC/USD Momentum Breakout</span>
+                                <span class="px-2 py-0.5 rounded text-[9px] font-bold bg-emerald-500/20 text-emerald-400 border border-emerald-500/40">TARGET HIT (+420 Pips)</span>
+                            </div>
+                            <div class="text-[11px] text-slate-400 mt-0.5">Bullish flag pattern breakout verified on 4H timeframe chart.</div>
+                        </div>
+                    </div>
+                    <span class="text-[10px] font-semibold text-cyan-400 bg-cyan-500/10 px-2.5 py-1 rounded-lg border border-cyan-500/30 self-end sm:self-center">Yesterday</span>
+                </div>
+            </div>
+        </section>
+
+        
+
+        <!-- MAIN FOOTER CONTACT HUB -->
+        <section id="contact" class="py-12 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto">
+            <div class="glass-panel tilt-card border border-slate-700/80 rounded-3xl p-6 sm:p-8 shadow-glass-card relative overflow-hidden">
+                <div class="grid lg:grid-cols-2 gap-6 items-center">
+                    <div class="depth-layer space-y-2">
+                        <span class="px-2.5 py-1 rounded-full bg-emerald-500/20 text-emerald-400 text-[10px] font-bold">24/7 TRADING COMMUNITY</span>
+                        <h2 class="text-xl sm:text-2xl font-black text-white">Get Direct VIP Support & Access</h2>
+                        <p class="text-slate-300 text-xs leading-relaxed">
+                            Connect with Forex 7 sTarZ directly for daily trading setups, platform access, and business inquiries.
+                        </p>
+                    </div>
+
+                    <div class="depth-layer-deep flex flex-col sm:flex-row flex-wrap gap-2.5 justify-end">
+                        <a href="https://wa.me/923093958600?text=i%20will%20contact%20from%20fx7starz%20site" target="_blank" class="bg-emerald-500 hover:bg-emerald-400 text-black font-extrabold px-4 py-2.5 rounded-xl text-xs flex items-center justify-center gap-2 transition-transform shadow-neon-emerald">
+                            <i class="fab fa-whatsapp text-base"></i>
+                            <span>WhatsApp</span>
+                        </a>
+                        <a href="https://t.me/fx_support9?text=i%20will%20contact%20from%20fx7starz%20site" target="_blank" class="bg-sky-500 hover:bg-sky-400 text-black font-extrabold px-4 py-2.5 rounded-xl text-xs flex items-center justify-center gap-2 transition-transform shadow-neon-sky">
+                            <i class="fab fa-telegram text-base"></i>
+                            <span>Telegram</span>
+                        </a>
+                        <a href="mailto:mybusiness309@gmail.com" class="bg-slate-800 hover:bg-slate-700 text-slate-200 border border-slate-700 font-bold px-4 py-2.5 rounded-xl text-xs flex items-center justify-center gap-2 transition-transform">
+                            <i class="fas fa-envelope text-cyan-400"></i>
+                            <span>Email</span>
+                        </a>
+                        <a href="https://one.exnessonelink.com/a/vtkbbmje" target="_blank" class="bg-gradient-to-r from-amber-500 to-emerald-500 hover:from-amber-400 hover:to-emerald-400 text-black font-extrabold px-4 py-2.5 rounded-xl text-xs flex items-center justify-center gap-2 transition-transform shadow-neon-gold">
+                            <i class="fas fa-crown"></i>
+                            <span>VIP Account</span>
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+    </main>
+
+    <!-- Footer -->
+    <footer class="border-t border-slate-800/80 py-6 bg-darkBg text-xs text-slate-400 relative z-10">
+        <div class="max-w-7xl mx-auto px-4 text-center">
+            <p>© 2026 Forex 7 sTarZ. All rights reserved. 24/7 Professional Trading Ecosystem.</p>
+        </div>
+    </footer>
+
+    <!-- Interactive 3D Animations & Mobile Viewport Safeguard Script -->
+    <script>
+        // Drawer Toggle Function
+        function toggleDrawer() {
+            const drawer = document.getElementById('mobile-drawer');
+            const backdrop = document.getElementById('drawer-backdrop');
+            
+            if (drawer.classList.contains('drawer-closed')) {
+                drawer.classList.remove('drawer-closed');
+                drawer.classList.add('drawer-open');
+                backdrop.classList.remove('opacity-0', 'pointer-events-none');
+                backdrop.classList.add('opacity-100', 'pointer-events-auto');
+            } else {
+                drawer.classList.remove('drawer-open');
+                drawer.classList.add('drawer-closed');
+                backdrop.classList.remove('opacity-100', 'pointer-events-auto');
+                backdrop.classList.add('opacity-0', 'pointer-events-none');
+            }
+        }
+
+        /* SAFE MOBILE 3D TILT EFFECT */
+        const tiltCards = document.querySelectorAll('.tilt-card');
+        const isMobile = window.innerWidth < 768;
+
+        tiltCards.forEach(card => {
+            card.addEventListener('mousemove', (e) => {
+                const rect = card.getBoundingClientRect();
+                const x = e.clientX - rect.left;
+                const y = e.clientY - rect.top;
+
+                const centerX = rect.width / 2;
+                const centerY = rect.height / 2;
+
+                // Scaled down tilt for mobile to avoid layout zooming
+                const maxAngle = isMobile ? 6 : 12;
+                const rotateX = ((y - centerY) / centerY) * -maxAngle;
+                const rotateY = ((x - centerX) / centerX) * maxAngle;
+
+                card.style.transform = `perspective(800px) rotateX(${rotateX}deg) rotateY(${rotateY}deg) scale3d(1.01, 1.01, 1.01)`;
+            });
+
+            card.addEventListener('mouseleave', () => {
+                card.style.transform = 'perspective(800px) rotateX(0deg) rotateY(0deg) scale3d(1, 1, 1)';
+            });
+        });
+
+        /* THREE.JS LIGHTWEIGHT PARTICLES BACKGROUND */
+        const container = document.getElementById('canvas-container');
+        const scene = new THREE.Scene();
+        const camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
+        const renderer = new THREE.WebGLRenderer({ alpha: true, antialias: false });
+        
+        renderer.setSize(window.innerWidth, window.innerHeight);
+        renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
+        container.appendChild(renderer.domElement);
+
+        const geometry = new THREE.BufferGeometry();
+        const count = isMobile ? 180 : 350;
+        const positions = new Float32Array(count * 3);
+
+        for(let i = 0; i < count * 3; i++) {
+            positions[i] = (Math.random() - 0.5) * 16;
+        }
+
+        geometry.setAttribute('position', new THREE.BufferAttribute(positions, 3));
+        const material = new THREE.PointsMaterial({
+            size: 0.04,
+            color: 0x10b981,
+            transparent: true,
+            opacity: 0.5
+        });
+
+        const points = new THREE.Points(geometry, material);
+        scene.add(points);
+        camera.position.z = 6;
+
+        function animate() {
+            requestAnimationFrame(animate);
+            points.rotation.x += 0.0005;
+            points.rotation.y += 0.0008;
+            renderer.render(scene, camera);
+        }
+        animate();
+
+        window.addEventListener('resize', () => {
+            camera.aspect = window.innerWidth / window.innerHeight;
+            camera.updateProjectionMatrix();
+            renderer.setSize(window.innerWidth, window.innerHeight);
+        });
+    </script>
+</body>
+</html>
