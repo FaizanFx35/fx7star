@@ -42,93 +42,114 @@ body{
     border:1px solid rgba(255,255,255,.07);
     backdrop-filter:blur(16px);
     -webkit-backdrop-filter:blur(16px);
-    box-shadow:0 15px 40px rgba(0,0,0,.30);
+    box-shadow:0 18px 45px rgba(0,0,0,.30);
 }
 
 /* =========================
-   COMPACT PLAN CARDS
+   PLAN CARDS
 ========================= */
 
 .plan{
-    position:relative;
-    overflow:hidden;
-    transition:
-        transform .2s ease,
-        border-color .2s ease,
-        box-shadow .2s ease;
+    transition:.25s ease;
 }
 
 .plan:hover{
     transform:translateY(-3px);
-    box-shadow:
-        0 10px 30px rgba(16,185,129,.10);
-}
-
-.plan::before{
-    content:"";
-    position:absolute;
-    width:90px;
-    height:90px;
-    top:-45px;
-    right:-35px;
-    background:rgba(16,185,129,.08);
-    filter:blur(30px);
-    border-radius:50%;
-    pointer-events:none;
 }
 
 .plan.selected{
     border-color:#10b981 !important;
     box-shadow:
-        0 0 18px rgba(16,185,129,.16),
-        0 0 35px rgba(16,185,129,.06);
+        0 0 20px rgba(16,185,129,.18),
+        0 0 50px rgba(16,185,129,.06);
 }
 
 /* =========================
-   PLAN BUTTON
+   FORM
 ========================= */
 
-.plan-btn{
+.form-input{
+    width:100%;
+    background:#020617;
+    border:1px solid #1e293b;
+    color:#fff;
+    border-radius:11px;
+    padding:11px 12px;
+    outline:none;
+    font-size:12px;
     transition:.2s ease;
 }
 
-.plan-btn:hover{
-    transform:translateY(-1px);
+.form-input:focus{
+    border-color:#10b981;
+    box-shadow:0 0 0 2px rgba(16,185,129,.10);
+}
+
+.form-label{
+    display:block;
+    color:#cbd5e1;
+    font-size:10px;
+    font-weight:700;
+    margin-bottom:6px;
 }
 
 /* =========================
-   PAYMENT METHOD
+   PAYMENT METHOD COMPACT
 ========================= */
 
 .payment-method{
-    transition:
-        transform .18s ease,
-        border-color .18s ease,
-        background .18s ease,
-        box-shadow .18s ease;
+    position:relative;
+    min-width:0;
+    height:64px;
+    border:1px solid #1e293b;
+    background:rgba(2,6,23,.72);
+    border-radius:14px;
+    display:flex;
+    align-items:center;
+    gap:9px;
+    padding:9px 10px;
+    text-align:left;
     cursor:pointer;
+    transition:.22s ease;
+    overflow:hidden;
 }
 
 .payment-method:hover{
     transform:translateY(-2px);
+    border-color:rgba(16,185,129,.35);
 }
 
 .payment-method.selected{
     border-color:#10b981 !important;
     background:rgba(16,185,129,.08);
     box-shadow:
-        0 0 18px rgba(16,185,129,.12),
+        0 0 18px rgba(16,185,129,.14),
         inset 0 0 18px rgba(16,185,129,.025);
 }
 
 .payment-icon{
-    width:36px;
-    height:36px;
-    border-radius:11px;
+    width:34px;
+    height:34px;
+    min-width:34px;
+    border-radius:10px;
     display:flex;
     align-items:center;
     justify-content:center;
-    flex-shrink:0;
+    font-size:14px;
+}
+
+.payment-method-name{
+    font-size:10px;
+    font-weight:800;
+    color:#fff;
+    line-height:1.2;
+}
+
+.payment-method-network{
+    font-size:8px;
+    color:#64748b;
+    margin-top:3px;
+    line-height:1.2;
 }
 
 /* =========================
@@ -138,41 +159,46 @@ body{
 .payment-box{
     position:relative;
     overflow:hidden;
-
-    border:1px solid rgba(16,185,129,.28);
-
+    border:1px solid rgba(16,185,129,.30);
     background:
         radial-gradient(
             circle at 50% 0%,
-            rgba(16,185,129,.11),
-            transparent 45%
+            rgba(16,185,129,.13),
+            transparent 42%
         ),
         rgba(2,6,23,.94);
-
     box-shadow:
-        0 0 25px rgba(16,185,129,.07),
-        inset 0 0 25px rgba(16,185,129,.025);
+        0 0 28px rgba(16,185,129,.08),
+        inset 0 0 35px rgba(16,185,129,.025);
+    animation:paymentGlow 3s ease-in-out infinite;
 }
 
 .payment-box::before{
     content:"";
     position:absolute;
-
-    width:150px;
-    height:150px;
-
-    background:rgba(16,185,129,.08);
-
-    filter:blur(50px);
-
+    width:180px;
+    height:180px;
+    background:rgba(16,185,129,.09);
+    filter:blur(55px);
     border-radius:50%;
-
-    top:-75px;
+    top:-90px;
     left:50%;
-
     transform:translateX(-50%);
-
     pointer-events:none;
+}
+
+@keyframes paymentGlow{
+    0%,100%{
+        box-shadow:
+            0 0 25px rgba(16,185,129,.07),
+            inset 0 0 30px rgba(16,185,129,.02);
+    }
+
+    50%{
+        box-shadow:
+            0 0 35px rgba(16,185,129,.13),
+            inset 0 0 35px rgba(16,185,129,.035);
+    }
 }
 
 /* =========================
@@ -180,30 +206,30 @@ body{
 ========================= */
 
 .qr-wrapper{
-    width:175px;
-    height:175px;
-
+    width:180px;
+    height:180px;
     background:#fff;
-
     padding:8px;
-
-    border-radius:16px;
-
+    border-radius:17px;
     margin:auto;
-
     display:flex;
     align-items:center;
     justify-content:center;
-
     box-shadow:
-        0 0 20px rgba(16,185,129,.15),
-        0 0 45px rgba(16,185,129,.06);
+        0 0 25px rgba(16,185,129,.16),
+        0 0 55px rgba(16,185,129,.06);
+}
+
+#qrcode{
+    display:flex;
+    align-items:center;
+    justify-content:center;
 }
 
 #qrcode img,
 #qrcode canvas{
-    max-width:159px !important;
-    max-height:159px !important;
+    max-width:164px;
+    max-height:164px;
     display:block;
 }
 
@@ -226,70 +252,17 @@ body{
 }
 
 /* =========================
-   FORM
-========================= */
-
-.form-input{
-    width:100%;
-
-    background:#020617;
-
-    border:1px solid #1e293b;
-
-    color:#fff;
-
-    border-radius:10px;
-
-    padding:10px 11px;
-
-    outline:none;
-
-    font-size:11px;
-
-    transition:.2s ease;
-}
-
-.form-input:focus{
-    border-color:#10b981;
-
-    box-shadow:
-        0 0 0 2px rgba(16,185,129,.09);
-}
-
-.form-label{
-    display:block;
-
-    color:#cbd5e1;
-
-    font-size:10px;
-
-    font-weight:700;
-
-    margin-bottom:5px;
-}
-
-/* =========================
    WARNING
 ========================= */
 
 .warning{
     background:rgba(245,158,11,.06);
-
     border:1px solid rgba(245,158,11,.20);
-
     color:#fbbf24;
 }
 
 /* =========================
-   FEATURE
-========================= */
-
-.feature{
-    border-top:1px solid rgba(255,255,255,.05);
-}
-
-/* =========================
-   HIDDEN
+   UTILITIES
 ========================= */
 
 .hidden-section{
@@ -301,25 +274,21 @@ body{
     display:none;
 }
 
-/* =========================
-   BUTTON
-========================= */
-
-button{
-    -webkit-tap-highlight-color:transparent;
-}
-
 button:disabled{
     opacity:.6;
     cursor:not-allowed;
 }
 
-/* =========================
-   SCROLLBAR
-========================= */
+.copy-btn{
+    transition:.2s ease;
+}
+
+.copy-btn:hover{
+    transform:translateY(-1px);
+}
 
 ::-webkit-scrollbar{
-    width:4px;
+    width:5px;
 }
 
 ::-webkit-scrollbar-track{
@@ -338,56 +307,41 @@ button:disabled{
 @media(max-width:640px){
 
     main{
-        padding-top:25px !important;
-    }
-
-    .plan{
-        padding:13px !important;
-        border-radius:15px;
-    }
-
-    .plan .price{
-        font-size:22px;
-    }
-
-    .plan ul,
-    .plan .features{
-        margin-top:10px !important;
-    }
-
-    .plan-btn{
-        margin-top:12px !important;
-        padding:9px 5px !important;
-        font-size:9px !important;
+        padding-top:28px !important;
     }
 
     .payment-method{
-        padding:11px !important;
-        border-radius:14px;
+        height:60px;
+        padding:8px;
+        gap:7px;
     }
 
     .payment-icon{
-        width:32px;
-        height:32px;
+        width:31px;
+        height:31px;
+        min-width:31px;
+        font-size:12px;
         border-radius:9px;
     }
 
-    .payment-box{
-        padding:15px !important;
-        border-radius:20px;
+    .payment-method-name{
+        font-size:9px;
+    }
+
+    .payment-method-network{
+        font-size:7px;
     }
 
     .qr-wrapper{
-        width:155px;
-        height:155px;
+        width:170px;
+        height:170px;
     }
 
     #qrcode img,
     #qrcode canvas{
-        max-width:139px !important;
-        max-height:139px !important;
+        max-width:154px;
+        max-height:154px;
     }
-
 }
 
 </style>
@@ -395,1282 +349,1057 @@ button:disabled{
 
 <body>
 
-<!-- =====================================================
-HEADER
-===================================================== -->
+<!-- =========================
+     HEADER
+========================= -->
 
 <header class="sticky top-0 z-50 glass border-b border-slate-800">
 
-<div class="max-w-6xl mx-auto px-4 h-14 flex items-center justify-between">
+    <div class="max-w-6xl mx-auto px-4 h-14 sm:h-16 flex items-center justify-between">
 
-<a href="index.html"
-class="flex items-center gap-2">
+        <a href="index.html"
+           class="flex items-center gap-2">
 
-<div class="w-8 h-8 rounded-lg
-bg-emerald-500/10
-border border-emerald-500/40
-flex items-center justify-center
-text-emerald-400">
+            <div class="w-8 h-8 sm:w-9 sm:h-9 rounded-xl
+                        bg-emerald-500/10
+                        border border-emerald-500/40
+                        flex items-center justify-center
+                        text-emerald-400">
 
-<i class="fas fa-star text-sm"></i>
+                <i class="fas fa-star text-xs sm:text-sm"></i>
 
-</div>
+            </div>
 
-<span class="font-extrabold text-white text-sm">
+            <span class="font-extrabold text-white text-sm">
+                Forex<span class="text-emerald-400">7sTarZ</span>
+            </span>
 
-Forex<span class="text-emerald-400">7sTarZ</span>
+        </a>
 
-</span>
+        <a href="index.html"
+           class="text-[10px] sm:text-xs font-bold text-slate-300 hover:text-emerald-400">
 
-</a>
+            <i class="fas fa-arrow-left mr-1"></i>
+            Back Home
 
-<a href="index.html"
-class="text-[10px] font-bold text-slate-300 hover:text-emerald-400">
+        </a>
 
-<i class="fas fa-arrow-left mr-1"></i>
-
-Back Home
-
-</a>
-
-</div>
+    </div>
 
 </header>
 
 
-<main class="max-w-6xl mx-auto px-4 py-8">
+<main class="max-w-6xl mx-auto px-4 py-8 sm:py-10">
 
+<!-- =========================
+     HERO
+========================= -->
 
-<!-- =====================================================
-HERO
-===================================================== -->
+<section class="text-center mb-8">
 
-<section class="text-center mb-7">
+    <span class="inline-flex items-center gap-2
+                 px-3 py-1 rounded-full
+                 bg-amber-500/10
+                 border border-amber-500/30
+                 text-amber-400
+                 text-[9px] font-extrabold
+                 uppercase tracking-widest">
 
-<span class="inline-flex items-center gap-2
-px-3 py-1 rounded-full
-bg-amber-500/10
-border border-amber-500/30
-text-amber-400
-text-[9px]
-font-extrabold
-uppercase
-tracking-widest">
+        <i class="fas fa-crown"></i>
+        Premium VIP
 
-<i class="fas fa-crown"></i>
+    </span>
 
-Premium VIP
+    <h1 class="text-3xl sm:text-5xl font-black text-white mt-4">
 
-</span>
+        Upgrade to
 
-<h1 class="text-3xl sm:text-5xl font-black text-white mt-4">
+        <span class="text-transparent bg-clip-text
+                     bg-gradient-to-r
+                     from-amber-400
+                     via-emerald-400
+                     to-cyan-400">
 
-Upgrade to
+            VIP Signals
 
-<span class="text-transparent bg-clip-text
-bg-gradient-to-r
-from-amber-400
-via-emerald-400
-to-cyan-400">
+        </span>
 
-VIP Signals
+    </h1>
 
-</span>
+    <p class="max-w-xl mx-auto text-slate-400 text-[11px] sm:text-sm leading-relaxed mt-3">
 
-</h1>
+        Premium trading signals, market analysis and dedicated VIP support.
 
-<p class="max-w-xl mx-auto text-slate-400 text-[11px] sm:text-sm leading-relaxed mt-3">
-
-Premium trading signals, market analysis and dedicated VIP support.
-
-</p>
+    </p>
 
 </section>
 
 
-<!-- =====================================================
-PLANS
-COMPACT
-===================================================== -->
+<!-- =========================
+     PLANS
+========================= -->
 
 <section class="grid grid-cols-2 lg:grid-cols-4 gap-3">
 
+    <!-- MONTHLY -->
 
-<!-- MONTHLY -->
+    <div id="plan-monthly"
+         class="plan glass rounded-xl p-4 border border-emerald-500/25">
 
-<div id="plan-monthly"
-class="plan glass rounded-2xl p-4 border border-emerald-500/30">
+        <div class="text-emerald-400 text-[8px] font-extrabold uppercase tracking-widest">
+            Monthly
+        </div>
 
-<div class="flex items-center justify-between">
+        <div class="mt-2">
 
-<div class="text-emerald-400 text-[9px] font-extrabold uppercase tracking-widest">
+            <span class="text-2xl font-black text-white">
+                $30
+            </span>
 
-Monthly
+            <span class="text-[9px] text-slate-500">
+                / month
+            </span>
 
-</div>
+        </div>
 
-<div class="w-6 h-6 rounded-lg
-bg-emerald-500/10
-flex items-center justify-center
-text-emerald-400">
+        <div class="mt-3 space-y-1 text-[9px] text-slate-300">
 
-<i class="fas fa-calendar text-[10px]"></i>
+            <div>
+                <i class="fas fa-check text-emerald-400 mr-1"></i>
+                VIP Signals
+            </div>
 
-</div>
+            <div>
+                <i class="fas fa-check text-emerald-400 mr-1"></i>
+                Gold Analysis
+            </div>
 
-</div>
+            <div>
+                <i class="fas fa-check text-emerald-400 mr-1"></i>
+                VIP Support
+            </div>
 
-<div class="mt-2">
+        </div>
 
-<span class="price text-2xl font-black text-white">
+        <button
+            type="button"
+            onclick="selectPlan('Monthly','$30','plan-monthly')"
+            class="w-full mt-4 bg-emerald-500 hover:bg-emerald-400
+                   text-black font-extrabold py-2 rounded-lg text-[9px]">
 
-$30
+            Choose Monthly
 
-</span>
+        </button>
 
-<span class="text-[9px] text-slate-500">
+    </div>
 
-/ month
 
-</span>
+    <!-- QUARTERLY -->
 
-</div>
+    <div id="plan-quarterly"
+         class="plan glass rounded-xl p-4 border border-cyan-500/25">
 
-<div class="features space-y-1.5 mt-3 text-[9px] text-slate-300">
+        <div class="text-cyan-400 text-[8px] font-extrabold uppercase tracking-widest">
+            Quarterly
+        </div>
 
-<div>
-<i class="fas fa-check text-emerald-400 mr-1"></i>
-Premium Signals
-</div>
+        <div class="mt-2">
 
-<div>
-<i class="fas fa-check text-emerald-400 mr-1"></i>
-Gold Analysis
-</div>
+            <span class="text-2xl font-black text-white">
+                $75
+            </span>
 
-<div>
-<i class="fas fa-check text-emerald-400 mr-1"></i>
-VIP Support
-</div>
+            <span class="text-[9px] text-slate-500">
+                / 3 months
+            </span>
 
-</div>
+        </div>
 
-<button
-type="button"
-onclick="selectPlan('Monthly','$30','plan-monthly')"
-class="plan-btn w-full mt-4
-bg-emerald-500
-hover:bg-emerald-400
-text-black
-font-extrabold
-py-2
-rounded-lg
-text-[9px]">
+        <div class="mt-3 space-y-1 text-[9px] text-slate-300">
 
-Choose Plan
+            <div>
+                <i class="fas fa-check text-cyan-400 mr-1"></i>
+                VIP Signals
+            </div>
 
-</button>
+            <div>
+                <i class="fas fa-check text-cyan-400 mr-1"></i>
+                Multi-Asset
+            </div>
 
-</div>
+            <div>
+                <i class="fas fa-check text-cyan-400 mr-1"></i>
+                VIP Support
+            </div>
 
+        </div>
 
-<!-- QUARTERLY -->
+        <button
+            type="button"
+            onclick="selectPlan('Quarterly','$75','plan-quarterly')"
+            class="w-full mt-4 bg-cyan-500 hover:bg-cyan-400
+                   text-black font-extrabold py-2 rounded-lg text-[9px]">
 
-<div id="plan-quarterly"
-class="plan glass rounded-2xl p-4 border border-cyan-500/30">
+            Choose Quarterly
 
-<div class="flex items-center justify-between">
+        </button>
 
-<div class="text-cyan-400 text-[9px] font-extrabold uppercase tracking-widest">
+    </div>
 
-Quarterly
 
-</div>
+    <!-- HALF YEAR -->
 
-<div class="w-6 h-6 rounded-lg
-bg-cyan-500/10
-flex items-center justify-center
-text-cyan-400">
+    <div id="plan-half"
+         class="plan glass rounded-xl p-4 border border-purple-500/25">
 
-<i class="fas fa-layer-group text-[10px]"></i>
+        <div class="text-purple-400 text-[8px] font-extrabold uppercase tracking-widest">
+            Half-Yearly
+        </div>
 
-</div>
+        <div class="mt-2">
 
-</div>
+            <span class="text-2xl font-black text-white">
+                $120
+            </span>
 
-<div class="mt-2">
+            <span class="text-[9px] text-slate-500">
+                / 6 months
+            </span>
 
-<span class="price text-2xl font-black text-white">
+        </div>
 
-$75
+        <div class="mt-3 space-y-1 text-[9px] text-slate-300">
 
-</span>
+            <div>
+                <i class="fas fa-check text-purple-400 mr-1"></i>
+                VIP Signals
+            </div>
 
-<span class="text-[9px] text-slate-500">
+            <div>
+                <i class="fas fa-check text-purple-400 mr-1"></i>
+                Analysis
+            </div>
 
-/ 3 months
+            <div>
+                <i class="fas fa-check text-purple-400 mr-1"></i>
+                Priority Support
+            </div>
 
-</span>
+        </div>
 
-</div>
+        <button
+            type="button"
+            onclick="selectPlan('Half-Yearly','$120','plan-half')"
+            class="w-full mt-4 bg-purple-500 hover:bg-purple-400
+                   text-white font-extrabold py-2 rounded-lg text-[9px]">
 
-<div class="features space-y-1.5 mt-3 text-[9px] text-slate-300">
+            Choose Half-Yearly
 
-<div>
-<i class="fas fa-check text-cyan-400 mr-1"></i>
-Premium Signals
-</div>
+        </button>
 
-<div>
-<i class="fas fa-check text-cyan-400 mr-1"></i>
-Multi-Asset
-</div>
+    </div>
 
-<div>
-<i class="fas fa-check text-cyan-400 mr-1"></i>
-VIP Support
-</div>
 
-</div>
+    <!-- YEARLY -->
 
-<button
-type="button"
-onclick="selectPlan('Quarterly','$75','plan-quarterly')"
-class="plan-btn w-full mt-4
-bg-cyan-500
-hover:bg-cyan-400
-text-black
-font-extrabold
-py-2
-rounded-lg
-text-[9px]">
+    <div id="plan-yearly"
+         class="plan glass rounded-xl p-4 border border-amber-500/35 relative">
 
-Choose Plan
+        <div class="absolute top-2 right-2
+                    px-1.5 py-1 rounded-md
+                    bg-amber-500/10
+                    border border-amber-500/20
+                    text-amber-400 text-[6px] font-extrabold">
 
-</button>
+            BEST
 
-</div>
+        </div>
 
+        <div class="text-amber-400 text-[8px] font-extrabold uppercase tracking-widest">
+            Yearly
+        </div>
 
-<!-- HALF YEAR -->
+        <div class="mt-2">
 
-<div id="plan-half"
-class="plan glass rounded-2xl p-4 border border-purple-500/30">
+            <span class="text-2xl font-black text-white">
+                $180
+            </span>
 
-<div class="flex items-center justify-between">
+            <span class="text-[9px] text-slate-500">
+                / year
+            </span>
 
-<div class="text-purple-400 text-[9px] font-extrabold uppercase tracking-widest">
+        </div>
 
-6 Months
+        <div class="mt-3 space-y-1 text-[9px] text-slate-300">
 
-</div>
+            <div>
+                <i class="fas fa-check text-amber-400 mr-1"></i>
+                VIP Signals
+            </div>
 
-<div class="w-6 h-6 rounded-lg
-bg-purple-500/10
-flex items-center justify-center
-text-purple-400">
+            <div>
+                <i class="fas fa-check text-amber-400 mr-1"></i>
+                Full Coverage
+            </div>
 
-<i class="fas fa-clock text-[10px]"></i>
+            <div>
+                <i class="fas fa-check text-amber-400 mr-1"></i>
+                Priority Support
+            </div>
 
-</div>
+        </div>
 
-</div>
+        <button
+            type="button"
+            onclick="selectPlan('Yearly','$180','plan-yearly')"
+            class="w-full mt-4
+                   bg-gradient-to-r
+                   from-amber-500
+                   to-emerald-500
+                   hover:from-amber-400
+                   hover:to-emerald-400
+                   text-black font-extrabold
+                   py-2 rounded-lg text-[9px]">
 
-<div class="mt-2">
+            Choose Yearly
 
-<span class="price text-2xl font-black text-white">
+        </button>
 
-$120
-
-</span>
-
-<span class="text-[9px] text-slate-500">
-
-/ 6 months
-
-</span>
-
-</div>
-
-<div class="features space-y-1.5 mt-3 text-[9px] text-slate-300">
-
-<div>
-<i class="fas fa-check text-purple-400 mr-1"></i>
-Premium Signals
-</div>
-
-<div>
-<i class="fas fa-check text-purple-400 mr-1"></i>
-Market Analysis
-</div>
-
-<div>
-<i class="fas fa-check text-purple-400 mr-1"></i>
-Priority Support
-</div>
-
-</div>
-
-<button
-type="button"
-onclick="selectPlan('Half-Yearly','$120','plan-half')"
-class="plan-btn w-full mt-4
-bg-purple-500
-hover:bg-purple-400
-text-white
-font-extrabold
-py-2
-rounded-lg
-text-[9px]">
-
-Choose Plan
-
-</button>
-
-</div>
-
-
-<!-- YEARLY -->
-
-<div id="plan-yearly"
-class="plan glass rounded-2xl p-4 border border-amber-500/40 relative">
-
-<div class="absolute top-2 right-2
-px-1.5 py-0.5
-rounded-md
-bg-amber-500/10
-border border-amber-500/30
-text-amber-400
-text-[6px]
-font-extrabold">
-
-BEST
-
-</div>
-
-<div class="flex items-center justify-between">
-
-<div class="text-amber-400 text-[9px] font-extrabold uppercase tracking-widest">
-
-Yearly
-
-</div>
-
-<div class="w-6 h-6 rounded-lg
-bg-amber-500/10
-flex items-center justify-center
-text-amber-400">
-
-<i class="fas fa-crown text-[10px]"></i>
-
-</div>
-
-</div>
-
-<div class="mt-2">
-
-<span class="price text-2xl font-black text-white">
-
-$180
-
-</span>
-
-<span class="text-[9px] text-slate-500">
-
-/ year
-
-</span>
-
-</div>
-
-<div class="features space-y-1.5 mt-3 text-[9px] text-slate-300">
-
-<div>
-<i class="fas fa-check text-amber-400 mr-1"></i>
-Premium Signals
-</div>
-
-<div>
-<i class="fas fa-check text-amber-400 mr-1"></i>
-Full Coverage
-</div>
-
-<div>
-<i class="fas fa-check text-amber-400 mr-1"></i>
-Priority VIP
-</div>
-
-</div>
-
-<button
-type="button"
-onclick="selectPlan('Yearly','$180','plan-yearly')"
-class="plan-btn w-full mt-4
-bg-gradient-to-r
-from-amber-500
-to-emerald-500
-hover:from-amber-400
-hover:to-emerald-400
-text-black
-font-extrabold
-py-2
-rounded-lg
-text-[9px]">
-
-Choose Plan
-
-</button>
-
-</div>
+    </div>
 
 </section>
 
 
-<!-- =====================================================
-VIP BENEFITS
-COMPACT
-===================================================== -->
+<!-- =========================
+     BENEFITS
+========================= -->
 
-<section class="glass rounded-2xl border border-slate-800 mt-6 p-4">
+<section class="glass rounded-2xl border border-slate-800 mt-6 p-5">
 
-<div class="text-center mb-4">
+    <div class="text-center mb-5">
 
-<span class="text-[8px] font-extrabold
-text-emerald-400
-uppercase tracking-widest">
+        <span class="text-[8px] font-extrabold text-emerald-400 uppercase tracking-widest">
+            VIP Benefits
+        </span>
 
-VIP Benefits
+        <h2 class="text-xl sm:text-2xl font-black text-white mt-1">
+            Everything You Need
+        </h2>
 
-</span>
+    </div>
 
-<h2 class="text-lg sm:text-2xl font-black text-white mt-1">
+    <div class="grid grid-cols-2 lg:grid-cols-4 gap-2">
 
-Everything You Need
+        <div class="p-3 rounded-xl bg-slate-950/60">
+            <i class="fas fa-bolt text-emerald-400 text-sm"></i>
+            <h3 class="text-[10px] font-bold text-white mt-2">
+                Live Signals
+            </h3>
+            <p class="text-[8px] text-slate-500 mt-1">
+                Premium trading setups.
+            </p>
+        </div>
 
-</h2>
+        <div class="p-3 rounded-xl bg-slate-950/60">
+            <i class="fas fa-coins text-amber-400 text-sm"></i>
+            <h3 class="text-[10px] font-bold text-white mt-2">
+                Gold Analysis
+            </h3>
+            <p class="text-[8px] text-slate-500 mt-1">
+                XAU/USD market analysis.
+            </p>
+        </div>
 
-</div>
+        <div class="p-3 rounded-xl bg-slate-950/60">
+            <i class="fas fa-chart-line text-cyan-400 text-sm"></i>
+            <h3 class="text-[10px] font-bold text-white mt-2">
+                Multi-Asset
+            </h3>
+            <p class="text-[8px] text-slate-500 mt-1">
+                Forex, Gold & Crypto.
+            </p>
+        </div>
 
-<div class="grid grid-cols-2 lg:grid-cols-4 gap-2">
+        <div class="p-3 rounded-xl bg-slate-950/60">
+            <i class="fas fa-headset text-purple-400 text-sm"></i>
+            <h3 class="text-[10px] font-bold text-white mt-2">
+                VIP Support
+            </h3>
+            <p class="text-[8px] text-slate-500 mt-1">
+                Direct support.
+            </p>
+        </div>
 
-<div class="p-3 rounded-xl bg-slate-950/60">
-
-<i class="fas fa-bolt text-emerald-400 text-sm"></i>
-
-<h3 class="text-[10px] font-bold text-white mt-2">
-
-Live Signals
-
-</h3>
-
-<p class="text-[8px] text-slate-500 mt-1">
-
-Premium trading setups and updates.
-
-</p>
-
-</div>
-
-<div class="p-3 rounded-xl bg-slate-950/60">
-
-<i class="fas fa-coins text-amber-400 text-sm"></i>
-
-<h3 class="text-[10px] font-bold text-white mt-2">
-
-Gold Analysis
-
-</h3>
-
-<p class="text-[8px] text-slate-500 mt-1">
-
-Dedicated XAU/USD analysis.
-
-</p>
-
-</div>
-
-<div class="p-3 rounded-xl bg-slate-950/60">
-
-<i class="fas fa-chart-line text-cyan-400 text-sm"></i>
-
-<h3 class="text-[10px] font-bold text-white mt-2">
-
-Multi-Asset
-
-</h3>
-
-<p class="text-[8px] text-slate-500 mt-1">
-
-Forex, Gold and Crypto markets.
-
-</p>
-
-</div>
-
-<div class="p-3 rounded-xl bg-slate-950/60">
-
-<i class="fas fa-headset text-purple-400 text-sm"></i>
-
-<h3 class="text-[10px] font-bold text-white mt-2">
-
-VIP Support
-
-</h3>
-
-<p class="text-[8px] text-slate-500 mt-1">
-
-Direct VIP support.
-
-</p>
-
-</div>
-
-</div>
+    </div>
 
 </section>
 
 
-<!-- =====================================================
-PAYMENT SECTION
-===================================================== -->
+<!-- =========================
+     PAYMENT SECTION
+========================= -->
 
 <section id="contact"
-class="glass rounded-2xl mt-6 p-4 sm:p-6 border border-emerald-500/20">
+         class="glass rounded-2xl mt-6 p-5 sm:p-7 border border-emerald-500/20">
 
-<div class="text-center">
+    <div class="text-center">
 
-<span class="text-[8px] font-extrabold
-text-emerald-400
-uppercase tracking-widest">
+        <span class="text-[8px] font-extrabold text-emerald-400 uppercase tracking-widest">
+            Secure Payment
+        </span>
 
-Secure Payment
+        <h2 class="text-xl sm:text-2xl font-black text-white mt-1">
+            Complete VIP Activation
+        </h2>
 
-</span>
+        <p class="text-[10px] text-slate-500 max-w-xl mx-auto mt-2">
+            Select your plan, choose payment method, make payment,
+            then submit your transaction ID.
+        </p>
 
-<h2 class="text-xl sm:text-2xl font-black text-white mt-1">
+    </div>
 
-Complete VIP Activation
 
-</h2>
+    <!-- SELECTED PLAN -->
 
-<p class="text-[9px] text-slate-500 mt-2">
+    <div class="mt-5 p-3 rounded-xl
+                bg-emerald-500/5
+                border border-emerald-500/20
+                text-center">
 
-Select plan → choose payment → pay → submit transaction ID.
+        <div class="text-[7px] text-slate-500 uppercase tracking-widest font-bold">
+            Selected Plan
+        </div>
 
-</p>
+        <div id="selectedPlanText"
+             class="text-xs font-extrabold text-emerald-400 mt-1">
 
-</div>
+            Please select a plan above
 
+        </div>
 
-<!-- SELECTED PLAN -->
+    </div>
 
-<div class="mt-4 p-3 rounded-xl
-bg-emerald-500/5
-border border-emerald-500/20
-text-center">
 
-<div class="text-[7px]
-text-slate-500
-uppercase
-tracking-widest
-font-bold">
+    <!-- =========================
+         PAYMENT METHODS
+    ========================= -->
 
-Selected Plan
+    <div id="paymentSection"
+         class="hidden-section mt-6">
 
-</div>
+        <div class="text-center mb-3">
 
-<div id="selectedPlanText"
-class="text-xs font-extrabold
-text-emerald-400 mt-1">
+            <h3 class="text-xs font-extrabold text-white">
 
-Please select a plan above
+                <i class="fas fa-wallet text-emerald-400 mr-1"></i>
 
-</div>
+                Choose Payment Method
 
-</div>
+            </h3>
 
+            <p class="text-[8px] text-slate-500 mt-1">
+                Select one payment method below.
+            </p>
 
-<!-- =====================================================
-PAYMENT METHODS
-===================================================== -->
+        </div>
 
-<div id="paymentSection"
-class="hidden-section mt-5">
 
-<div class="text-center mb-3">
+        <!-- COMPACT 3 + 2 GRID -->
 
-<h3 class="text-xs font-extrabold text-white">
+        <div class="grid grid-cols-3 gap-2">
 
-<i class="fas fa-wallet text-emerald-400 mr-1"></i>
+            <!-- USDT -->
 
-Choose Payment Method
+            <button
+                type="button"
+                class="payment-method"
+                onclick="selectPayment('USDT TRC20')"
+                data-payment="USDT TRC20">
 
-</h3>
+                <div class="payment-icon
+                            bg-emerald-500/10
+                            border border-emerald-500/20
+                            text-emerald-400">
 
-<p class="text-[8px] text-slate-500 mt-1">
+                    <i class="fas fa-dollar-sign"></i>
 
-Select the payment method you want to use.
+                </div>
 
-</p>
+                <div class="min-w-0">
 
-</div>
+                    <div class="payment-method-name">
+                        USDT
+                    </div>
 
+                    <div class="payment-method-network">
+                        TRC20
+                    </div>
 
-<div class="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-2">
+                </div>
 
+            </button>
 
-<!-- USDT -->
 
-<button
-type="button"
-class="payment-method glass rounded-xl p-3 border border-slate-800 text-left"
-onclick="selectPayment('USDT TRC20')"
-data-payment="USDT TRC20">
+            <!-- BINANCE -->
 
-<div class="payment-icon
-bg-emerald-500/10
-border border-emerald-500/20
-text-emerald-400">
+            <button
+                type="button"
+                class="payment-method"
+                onclick="selectPayment('Binance Pay')"
+                data-payment="Binance Pay">
 
-<i class="fas fa-dollar-sign text-sm"></i>
+                <div class="payment-icon
+                            bg-yellow-500/10
+                            border border-yellow-500/20
+                            text-yellow-400">
 
-</div>
+                    <i class="fas fa-coins"></i>
 
-<div class="text-[10px] font-extrabold text-white mt-2">
+                </div>
 
-USDT
+                <div class="min-w-0">
 
-</div>
+                    <div class="payment-method-name">
+                        Binance
+                    </div>
 
-<div class="text-[7px] text-slate-500 mt-0.5">
+                    <div class="payment-method-network">
+                        Pay ID
+                    </div>
 
-TRC20
+                </div>
 
-</div>
+            </button>
 
-</button>
 
+            <!-- BTC -->
 
-<!-- BINANCE -->
+            <button
+                type="button"
+                class="payment-method"
+                onclick="selectPayment('Bitcoin')"
+                data-payment="Bitcoin">
 
-<button
-type="button"
-class="payment-method glass rounded-xl p-3 border border-slate-800 text-left"
-onclick="selectPayment('Binance Pay')"
-data-payment="Binance Pay">
+                <div class="payment-icon
+                            bg-orange-500/10
+                            border border-orange-500/20
+                            text-orange-400">
 
-<div class="payment-icon
-bg-yellow-500/10
-border border-yellow-500/20
-text-yellow-400">
+                    <i class="fab fa-bitcoin"></i>
 
-<i class="fas fa-coins text-sm"></i>
+                </div>
 
-</div>
+                <div class="min-w-0">
 
-<div class="text-[10px] font-extrabold text-white mt-2">
+                    <div class="payment-method-name">
+                        Bitcoin
+                    </div>
 
-Binance Pay
+                    <div class="payment-method-network">
+                        BTC
+                    </div>
 
-</div>
+                </div>
 
-<div class="text-[7px] text-slate-500 mt-0.5">
+            </button>
 
-Pay ID
 
-</div>
+            <!-- BNB -->
 
-</button>
+            <button
+                type="button"
+                class="payment-method"
+                onclick="selectPayment('BNB')"
+                data-payment="BNB">
 
+                <div class="payment-icon
+                            bg-blue-500/10
+                            border border-blue-500/20
+                            text-blue-400">
 
-<!-- BTC -->
+                    <i class="fas fa-bolt"></i>
 
-<button
-type="button"
-class="payment-method glass rounded-xl p-3 border border-slate-800 text-left"
-onclick="selectPayment('Bitcoin')"
-data-payment="Bitcoin">
+                </div>
 
-<div class="payment-icon
-bg-orange-500/10
-border border-orange-500/20
-text-orange-400">
+                <div class="min-w-0">
 
-<i class="fab fa-bitcoin text-sm"></i>
+                    <div class="payment-method-name">
+                        BNB
+                    </div>
 
-</div>
+                    <div class="payment-method-network">
+                        BEP20
+                    </div>
 
-<div class="text-[10px] font-extrabold text-white mt-2">
+                </div>
 
-Bitcoin
+            </button>
 
-</div>
 
-<div class="text-[7px] text-slate-500 mt-0.5">
+            <!-- ETH -->
 
-BTC Network
+            <button
+                type="button"
+                class="payment-method"
+                onclick="selectPayment('Ethereum')"
+                data-payment="Ethereum">
 
-</div>
+                <div class="payment-icon
+                            bg-purple-500/10
+                            border border-purple-500/20
+                            text-purple-400">
 
-</button>
+                    <i class="fab fa-ethereum"></i>
 
+                </div>
 
-<!-- BNB -->
+                <div class="min-w-0">
 
-<button
-type="button"
-class="payment-method glass rounded-xl p-3 border border-slate-800 text-left"
-onclick="selectPayment('BNB')"
-data-payment="BNB">
+                    <div class="payment-method-name">
+                        Ethereum
+                    </div>
 
-<div class="payment-icon
-bg-blue-500/10
-border border-blue-500/20
-text-blue-400">
+                    <div class="payment-method-network">
+                        ERC20
+                    </div>
 
-<i class="fas fa-bolt text-sm"></i>
+                </div>
 
-</div>
+            </button>
 
-<div class="text-[10px] font-extrabold text-white mt-2">
+        </div>
 
-BNB
 
-</div>
+        <!-- =========================
+             PAYMENT BOX
+        ========================= -->
 
-<div class="text-[7px] text-slate-500 mt-0.5">
+        <div id="paymentBox"
+             class="payment-box rounded-2xl mt-5 p-5 hidden">
 
-BSC / BEP20
+            <div class="relative z-10">
 
-</div>
 
-</button>
+                <!-- ICON -->
 
+                <div class="text-center">
 
-<!-- ETH -->
+                    <div id="paymentTitleIcon"
+                         class="w-12 h-12 mx-auto rounded-xl
+                                bg-emerald-500/10
+                                border border-emerald-500/30
+                                flex items-center justify-center
+                                text-emerald-400 text-xl">
 
-<button
-type="button"
-class="payment-method glass rounded-xl p-3 border border-slate-800 text-left"
-onclick="selectPayment('Ethereum')"
-data-payment="Ethereum">
+                        <i class="fas fa-wallet"></i>
 
-<div class="payment-icon
-bg-purple-500/10
-border border-purple-500/20
-text-purple-400">
+                    </div>
 
-<i class="fab fa-ethereum text-sm"></i>
+                    <h3 id="paymentTitle"
+                        class="text-base font-black text-white mt-3">
 
-</div>
+                        USDT TRC20
 
-<div class="text-[10px] font-extrabold text-white mt-2">
+                    </h3>
 
-Ethereum
+                    <p id="paymentNetwork"
+                       class="text-[9px] text-emerald-400 font-bold mt-1">
 
-</div>
+                        TRON Network (TRC20)
 
-<div class="text-[7px] text-slate-500 mt-0.5">
+                    </p>
 
-ERC20
+                </div>
 
-</div>
 
-</button>
+                <!-- AMOUNT -->
 
-</div>
+                <div class="mt-4 text-center">
 
+                    <div class="text-[7px] text-slate-500 uppercase tracking-widest font-bold">
+                        Amount To Pay
+                    </div>
 
-<!-- =====================================================
-PAYMENT BOX
-===================================================== -->
+                    <div id="paymentAmount"
+                         class="text-2xl font-black text-white mt-1">
 
-<div id="paymentBox"
-class="payment-box rounded-2xl mt-4 p-4 hidden">
+                        $30
 
-<div class="relative z-10">
+                    </div>
 
+                </div>
 
-<!-- PAYMENT TITLE -->
 
-<div class="text-center">
+                <!-- QR -->
 
-<div id="paymentTitleIcon"
-class="w-11 h-11 mx-auto rounded-xl
-bg-emerald-500/10
-border border-emerald-500/30
-flex items-center justify-center
-text-emerald-400 text-lg">
+                <div class="mt-5">
 
-<i class="fas fa-wallet"></i>
+                    <div class="text-center mb-2">
 
-</div>
+                        <span class="text-[7px] font-extrabold uppercase tracking-widest text-slate-500">
+                            Scan QR Code
+                        </span>
 
-<h3 id="paymentTitle"
-class="text-base font-black text-white mt-2">
+                    </div>
 
-USDT TRC20
+                    <div class="qr-wrapper">
 
-</h3>
+                        <div id="qrcode"></div>
 
-<p id="paymentNetwork"
-class="text-[8px]
-text-emerald-400
-font-bold mt-0.5">
+                    </div>
 
-TRON Network (TRC20)
+                </div>
 
-</p>
 
-</div>
+                <!-- ADDRESS -->
 
+                <div class="max-w-xl mx-auto mt-5">
 
-<!-- AMOUNT -->
+                    <div id="addressLabel"
+                         class="text-[8px] font-extrabold uppercase tracking-widest text-slate-500 mb-2">
 
-<div class="mt-4 text-center">
+                        Wallet Address
 
-<div class="text-[7px]
-text-slate-500
-uppercase
-tracking-widest
-font-bold">
+                    </div>
 
-Amount To Pay
+                    <div class="address-box">
 
-</div>
+                        <div class="flex items-center gap-2">
 
-<div id="paymentAmount"
-class="text-2xl font-black text-white mt-0.5">
+                            <div id="paymentAddress"
+                                 class="address-text flex-1">
 
-$30
+                                --
 
-</div>
+                            </div>
 
-</div>
+                            <button
+                                type="button"
+                                onclick="copyPaymentDetails()"
+                                class="copy-btn shrink-0
+                                       bg-emerald-500
+                                       hover:bg-emerald-400
+                                       text-black
+                                       font-extrabold
+                                       px-3 py-2
+                                       rounded-lg
+                                       text-[9px]">
 
+                                <i class="fas fa-copy mr-1"></i>
+                                Copy
 
-<!-- QR -->
+                            </button>
 
-<div class="mt-4">
+                        </div>
 
-<div class="text-center mb-2">
+                    </div>
 
-<span class="text-[7px]
-font-extrabold
-uppercase
-tracking-widest
-text-slate-500">
+                    <div id="copyStatus"
+                         class="text-center text-[8px] text-emerald-400 mt-2 hidden">
 
-Scan QR Code
+                        <i class="fas fa-check mr-1"></i>
+                        Copied successfully
 
-</span>
+                    </div>
 
-</div>
+                </div>
 
-<div class="qr-wrapper">
 
-<div id="qrcode"></div>
+                <!-- WARNING -->
 
-</div>
+                <div class="warning max-w-xl mx-auto mt-4 p-3 rounded-xl text-[8px] leading-relaxed">
 
-</div>
+                    <div class="font-extrabold mb-1">
 
+                        <i class="fas fa-triangle-exclamation mr-1"></i>
+                        Important Payment Notice
 
-<!-- ADDRESS -->
+                    </div>
 
-<div class="max-w-xl mx-auto mt-4">
+                    <div id="networkWarning">
 
-<div id="addressLabel"
-class="text-[7px]
-font-extrabold
-uppercase
-tracking-widest
-text-slate-500 mb-1.5">
+                        Send USDT only through the TRC20 network.
 
-USDT TRC20 Wallet Address
+                    </div>
 
-</div>
+                </div>
 
-<div class="address-box">
 
-<div class="flex items-center gap-2">
+                <!-- PAID -->
 
-<div id="paymentAddress"
-class="address-text flex-1">
+                <div class="max-w-xl mx-auto mt-5 flex items-center gap-2">
 
---
+                    <div class="w-7 h-7 rounded-lg
+                                bg-emerald-500/10
+                                border border-emerald-500/20
+                                flex items-center justify-center
+                                text-emerald-400 text-[10px]">
 
-</div>
+                        <i class="fas fa-circle-check"></i>
 
-<button
-type="button"
-onclick="copyPaymentDetails()"
-class="shrink-0
-bg-emerald-500
-hover:bg-emerald-400
-text-black
-font-extrabold
-px-2.5
-py-2
-rounded-lg
-text-[8px]">
+                    </div>
 
-<i class="fas fa-copy mr-1"></i>
+                    <div>
 
-Copy
+                        <div class="text-[10px] font-extrabold text-white">
+                            Payment Completed?
+                        </div>
 
-</button>
+                        <div class="text-[8px] text-slate-500">
+                            Enter your transaction ID below.
+                        </div>
 
-</div>
+                    </div>
 
-</div>
+                </div>
 
-<div id="copyStatus"
-class="text-center
-text-[8px]
-text-emerald-400
-mt-1.5 hidden">
+            </div>
 
-<i class="fas fa-check mr-1"></i>
+        </div>
 
-Copied successfully
+    </div>
 
-</div>
 
-</div>
+    <!-- =========================
+         FORM
+    ========================= -->
 
+    <form id="premiumForm"
+          class="max-w-2xl mx-auto mt-6">
 
-<!-- WARNING -->
+        <input type="hidden"
+               id="planName"
+               name="plan_name">
 
-<div class="warning max-w-xl mx-auto mt-3 p-3 rounded-xl text-[8px] leading-relaxed">
+        <input type="hidden"
+               id="planAmount"
+               name="amount">
 
-<div class="font-extrabold mb-1">
+        <input type="hidden"
+               id="paymentMethod"
+               name="payment_method">
 
-<i class="fas fa-triangle-exclamation mr-1"></i>
+        <input type="hidden"
+               id="paymentAddressHidden"
+               name="payment_address">
 
-Important Payment Notice
 
-</div>
+        <div class="grid sm:grid-cols-2 gap-3">
 
-<div id="networkWarning">
 
-Send USDT only through the TRC20 network.
+            <!-- NAME -->
 
-</div>
+            <div>
 
-</div>
+                <label class="form-label">
+                    Full Name *
+                </label>
 
+                <input
+                    id="name"
+                    name="name"
+                    type="text"
+                    class="form-input"
+                    placeholder="Enter your full name"
+                    required>
 
-<!-- PAID -->
+            </div>
 
-<div class="max-w-xl mx-auto mt-4 flex items-center gap-2">
 
-<div class="w-7 h-7 rounded-lg
-bg-emerald-500/10
-border border-emerald-500/20
-flex items-center justify-center
-text-emerald-400 text-[10px]">
+            <!-- WHATSAPP -->
 
-<i class="fas fa-circle-check"></i>
+            <div>
 
-</div>
+                <label class="form-label">
+                    WhatsApp Number *
+                </label>
 
-<div>
+                <input
+                    id="whatsapp"
+                    name="whatsapp"
+                    type="tel"
+                    class="form-input"
+                    placeholder="+92 309 3958600"
+                    required>
 
-<div class="text-[9px]
-font-extrabold
-text-white">
+            </div>
 
-Already Paid?
 
-</div>
+            <!-- EMAIL -->
 
-<div class="text-[7px]
-text-slate-500">
+            <div>
 
-Enter your transaction ID below.
+                <label class="form-label">
+                    Email Address *
+                </label>
 
-</div>
+                <input
+                    id="email"
+                    name="email"
+                    type="email"
+                    class="form-input"
+                    placeholder="your@email.com"
+                    required>
 
-</div>
+            </div>
 
-</div>
 
-</div>
+            <!-- TRANSACTION -->
 
-</div>
+            <div>
 
-</div>
+                <label class="form-label">
+                    Transaction ID / TxHash *
+                </label>
 
+                <input
+                    id="transactionId"
+                    name="transaction_id"
+                    type="text"
+                    class="form-input"
+                    placeholder="Enter transaction ID"
+                    required>
 
-<!-- =====================================================
-FORM
-===================================================== -->
+            </div>
 
-<form id="premiumForm"
-class="max-w-2xl mx-auto mt-5">
 
-<input type="hidden"
-id="planName"
-name="plan_name">
+            <!-- MESSAGE -->
 
-<input type="hidden"
-id="planAmount"
-name="amount">
+            <div class="sm:col-span-2">
 
-<input type="hidden"
-id="paymentMethod"
-name="payment_method">
+                <label class="form-label">
+                    Additional Message
+                </label>
 
-<input type="hidden"
-id="paymentAddressHidden"
-name="payment_address">
+                <textarea
+                    id="message"
+                    name="message"
+                    rows="2"
+                    class="form-input"
+                    placeholder="Optional message..."></textarea>
 
+            </div>
 
-<div class="grid sm:grid-cols-2 gap-3">
+        </div>
 
 
-<!-- NAME -->
+        <!-- SUCCESS -->
 
-<div>
+        <div id="successBox"
+             class="mt-4 p-3 rounded-xl
+                    bg-emerald-500/10
+                    border border-emerald-500/30
+                    text-emerald-400
+                    text-[10px]
+                    font-bold
+                    text-center">
 
-<label class="form-label">
+            <i class="fas fa-circle-check mr-1"></i>
 
-Full Name *
+            Payment details submitted successfully.
+            Our support team will contact you shortly.
 
-</label>
+        </div>
 
-<input
-id="name"
-name="name"
-type="text"
-class="form-input"
-placeholder="Enter your full name"
-required>
 
-</div>
+        <!-- ERROR -->
 
+        <div id="errorBox"
+             class="mt-4 p-3 rounded-xl
+                    bg-red-500/10
+                    border border-red-500/30
+                    text-red-400
+                    text-[10px]
+                    font-bold
+                    text-center">
 
-<!-- WHATSAPP -->
+            <i class="fas fa-circle-exclamation mr-1"></i>
 
-<div>
+            <span id="errorText">
+                Something went wrong.
+            </span>
 
-<label class="form-label">
+        </div>
 
-WhatsApp Number *
 
-</label>
+        <!-- SUBMIT -->
 
-<input
-id="whatsapp"
-name="whatsapp"
-type="tel"
-class="form-input"
-placeholder="+92 309 3958600"
-required>
+        <button
+            id="submitBtn"
+            type="submit"
+            class="w-full mt-4
+                   bg-gradient-to-r
+                   from-emerald-500
+                   to-cyan-500
+                   hover:from-emerald-400
+                   hover:to-cyan-400
+                   text-black
+                   font-extrabold
+                   py-3
+                   rounded-xl
+                   text-[10px]
+                   transition-all">
 
-</div>
+            <i class="fas fa-paper-plane mr-2"></i>
+            Submit VIP Payment
 
+        </button>
 
-<!-- EMAIL -->
+    </form>
 
-<div>
 
-<label class="form-label">
+    <!-- =========================
+         DIRECT CONTACT
+    ========================= -->
 
-Email Address *
+    <div class="grid grid-cols-3 gap-2 mt-5">
 
-</label>
+        <a href="https://t.me/fx_support9?text=I%20want%20to%20join%20Forex%207%20StarZ%20VIP"
+           target="_blank"
+           rel="noopener noreferrer"
+           class="bg-sky-500 hover:bg-sky-400
+                  text-black font-extrabold
+                  py-2.5 rounded-lg
+                  text-[8px]
+                  flex items-center justify-center gap-1">
 
-<input
-id="email"
-name="email"
-type="email"
-class="form-input"
-placeholder="your@email.com"
-required>
+            <i class="fab fa-telegram"></i>
+            Telegram
 
-</div>
+        </a>
 
 
-<!-- TRANSACTION -->
+        <a href="https://wa.me/923093958600?text=I%20want%20to%20join%20Forex%207%20StarZ%20VIP"
+           target="_blank"
+           rel="noopener noreferrer"
+           class="bg-emerald-500 hover:bg-emerald-400
+                  text-black font-extrabold
+                  py-2.5 rounded-lg
+                  text-[8px]
+                  flex items-center justify-center gap-1">
 
-<div>
+            <i class="fab fa-whatsapp"></i>
+            WhatsApp
 
-<label class="form-label">
+        </a>
 
-Transaction ID / TxHash *
 
-</label>
+        <a href="mailto:mybusiness309@gmail.com?subject=Forex%207%20StarZ%20VIP%20Access"
+           class="bg-slate-800 hover:bg-slate-700
+                  border border-slate-700
+                  text-white font-extrabold
+                  py-2.5 rounded-lg
+                  text-[8px]
+                  flex items-center justify-center gap-1">
 
-<input
-id="transactionId"
-name="transaction_id"
-type="text"
-class="form-input"
-placeholder="Enter transaction ID / TxHash"
-required>
+            <i class="fas fa-envelope text-cyan-400"></i>
+            Email
 
-</div>
+        </a>
 
-
-<!-- MESSAGE -->
-
-<div class="sm:col-span-2">
-
-<label class="form-label">
-
-Additional Message
-
-</label>
-
-<textarea
-id="message"
-name="message"
-rows="2"
-class="form-input"
-placeholder="Any additional information..."></textarea>
-
-</div>
-
-</div>
-
-
-<!-- SUCCESS -->
-
-<div id="successBox"
-class="mt-4 p-3 rounded-xl
-bg-emerald-500/10
-border border-emerald-500/30
-text-emerald-400
-text-[9px]
-font-bold
-text-center">
-
-<i class="fas fa-circle-check mr-1"></i>
-
-Payment details submitted successfully.
-Our support team will contact you shortly.
-
-</div>
-
-
-<!-- ERROR -->
-
-<div id="errorBox"
-class="mt-4 p-3 rounded-xl
-bg-red-500/10
-border border-red-500/30
-text-red-400
-text-[9px]
-font-bold
-text-center">
-
-<i class="fas fa-circle-exclamation mr-1"></i>
-
-<span id="errorText">
-
-Something went wrong.
-
-</span>
-
-</div>
-
-
-<!-- SUBMIT -->
-
-<button
-id="submitBtn"
-type="submit"
-class="w-full mt-4
-bg-gradient-to-r
-from-emerald-500
-to-cyan-500
-hover:from-emerald-400
-hover:to-cyan-400
-text-black
-font-extrabold
-py-3
-rounded-xl
-text-[10px]
-transition-all">
-
-<i class="fas fa-paper-plane mr-2"></i>
-
-Submit VIP Payment
-
-</button>
-
-</form>
-
-
-<!-- CONTACT -->
-
-<div class="grid grid-cols-3 gap-2 mt-5">
-
-
-<a href="https://t.me/fx_support9?text=I%20want%20to%20join%20Forex%207%20StarZ%20VIP"
-target="_blank"
-rel="noopener noreferrer"
-class="bg-sky-500
-hover:bg-sky-400
-text-black
-font-extrabold
-py-2.5
-rounded-lg
-text-[8px]
-flex items-center
-justify-center
-gap-1">
-
-<i class="fab fa-telegram"></i>
-
-Telegram
-
-</a>
-
-
-<a href="https://wa.me/923093958600?text=I%20want%20to%20join%20Forex%207%20StarZ%20VIP"
-target="_blank"
-rel="noopener noreferrer"
-class="bg-emerald-500
-hover:bg-emerald-400
-text-black
-font-extrabold
-py-2.5
-rounded-lg
-text-[8px]
-flex items-center
-justify-center
-gap-1">
-
-<i class="fab fa-whatsapp"></i>
-
-WhatsApp
-
-</a>
-
-
-<a href="mailto:mybusiness309@gmail.com?subject=Forex%207%20StarZ%20VIP%20Access"
-class="bg-slate-800
-hover:bg-slate-700
-border border-slate-700
-text-white
-font-extrabold
-py-2.5
-rounded-lg
-text-[8px]
-flex items-center
-justify-center
-gap-1">
-
-<i class="fas fa-envelope text-cyan-400"></i>
-
-Email
-
-</a>
-
-</div>
+    </div>
 
 </section>
 
@@ -1679,57 +1408,44 @@ Email
 
 <div class="mt-5 text-center">
 
-<p class="text-[8px]
-text-slate-600
-leading-relaxed
-max-w-2xl mx-auto">
+    <p class="text-[8px] text-slate-600 leading-relaxed max-w-2xl mx-auto">
 
-Trading involves risk and past performance does not guarantee future results.
-Premium membership provides access to signals and analysis only and does not guarantee profits.
+        Trading involves risk and past performance does not guarantee future results.
+        Premium membership provides access to signals and analysis only and does not
+        guarantee profits.
 
-</p>
+    </p>
 
 </div>
 
 </main>
 
 
-<!-- =====================================================
-FOOTER
-===================================================== -->
+<!-- =========================
+     FOOTER
+========================= -->
 
 <footer class="border-t border-slate-800 py-5 text-center">
 
-<p class="text-[8px] text-slate-600">
+    <p class="text-[8px] text-slate-500">
+        © 2026 Forex 7 StarZ. All rights reserved.
+    </p>
 
-© 2026 Forex 7 StarZ. All rights reserved.
+    <div class="mt-2 text-[8px]">
 
-</p>
+        <a href="privacy.html" class="text-emerald-400 mx-2">
+            Privacy
+        </a>
 
-<div class="mt-2 text-[8px]">
+        <a href="terms.html" class="text-emerald-400 mx-2">
+            Terms
+        </a>
 
-<a href="privacy.html"
-class="text-emerald-400 mx-1.5">
+        <a href="disclaimer.html" class="text-emerald-400 mx-2">
+            Disclaimer
+        </a>
 
-Privacy
-
-</a>
-
-<a href="terms.html"
-class="text-emerald-400 mx-1.5">
-
-Terms
-
-</a>
-
-<a href="disclaimer.html"
-class="text-emerald-400 mx-1.5">
-
-Disclaimer
-
-</a>
-
-</div>
+    </div>
 
 </footer>
 
@@ -1737,107 +1453,117 @@ Disclaimer
 <script>
 
 /* =========================================================
-PAYMENT CONFIG
+   PAYMENT CONFIG
 ========================================================= */
 
 const paymentData = {
 
     "USDT TRC20": {
 
-        title:"USDT TRC20",
+        title: "USDT TRC20",
 
-        icon:"fas fa-dollar-sign",
+        icon: "fas fa-dollar-sign",
 
-        iconClass:"text-emerald-400",
+        iconClass: "text-emerald-400",
 
-        network:"TRON Network (TRC20)",
+        network: "TRON Network (TRC20)",
 
-        address:"TEeeH4G5uKcW41UXkLC7DDq9da8DPr7vH3",
+        address:
+            "TEeeH4G5uKcW41UXkLC7DDq9da8DPr7vH3",
 
-        label:"USDT TRC20 Wallet Address",
+        label:
+            "USDT TRC20 Wallet Address",
 
         warning:
-        "Send USDT only through the TRC20 network. Do NOT send USDT through ERC20, BEP20 or another network."
+            "Send USDT ONLY through the TRC20 network. Do NOT send through ERC20, BEP20 or another network."
 
     },
 
 
     "Binance Pay": {
 
-        title:"Binance Pay",
+        title: "Binance Pay",
 
-        icon:"fas fa-coins",
+        icon: "fas fa-coins",
 
-        iconClass:"text-yellow-400",
+        iconClass: "text-yellow-400",
 
-        network:"Binance Pay ID",
+        network: "Binance Pay ID",
 
-        address:"784318673",
+        address:
+            "784318673",
 
-        label:"Binance Pay ID",
+        label:
+            "Binance Pay ID",
 
         warning:
-        "Use Binance Pay and verify the Pay ID carefully before confirming the payment."
+            "Use Binance Pay and verify the Pay ID carefully before confirming the payment."
 
     },
 
 
     "Bitcoin": {
 
-        title:"Bitcoin (BTC)",
+        title: "Bitcoin (BTC)",
 
-        icon:"fab fa-bitcoin",
+        icon: "fab fa-bitcoin",
 
-        iconClass:"text-orange-400",
+        iconClass: "text-orange-400",
 
-        network:"Bitcoin Network",
+        network: "Bitcoin Network",
 
-        address:"1MFC63PWiPGWG1Z852t7oJ3pX8hGZYtPAU",
+        address:
+            "1MFC63PWiPGWG1Z852t7oJ3pX8hGZYtPAU",
 
-        label:"BTC Wallet Address",
+        label:
+            "BTC Wallet Address",
 
         warning:
-        "Send BTC only through the Bitcoin network. Do NOT send assets through another network."
+            "Send BTC ONLY through the Bitcoin network. Verify the address before confirming payment."
 
     },
 
 
     "BNB": {
 
-        title:"BNB",
+        title: "BNB",
 
-        icon:"fas fa-bolt",
+        icon: "fas fa-bolt",
 
-        iconClass:"text-blue-400",
+        iconClass: "text-blue-400",
 
-        network:"BNB Smart Chain (BSC / BEP20)",
+        network: "BNB Smart Chain (BSC / BEP20)",
 
-        address:"0xf499d2ba461aaaad0a2f74c4fcfc16fc4fcaf365",
+        address:
+            "0xf499d2ba461aaaad0a2f74c4fcfc16fc4fcaf365",
 
-        label:"BNB Wallet Address",
+        label:
+            "BNB Wallet Address",
 
         warning:
-        "Send BNB only through BNB Smart Chain (BSC / BEP20). Verify the network before sending."
+            "Send BNB ONLY through BNB Smart Chain (BSC / BEP20). Verify the network before sending."
 
     },
 
 
     "Ethereum": {
 
-        title:"Ethereum (ETH)",
+        title: "Ethereum (ETH)",
 
-        icon:"fab fa-ethereum",
+        icon: "fab fa-ethereum",
 
-        iconClass:"text-purple-400",
+        iconClass: "text-purple-400",
 
-        network:"Ethereum Network (ERC20)",
+        network: "Ethereum Network (ERC20)",
 
-        address:"0xf499d2ba461aaaad0a2f74c4fcfc16fc4fcaf365",
+        address:
+            "0xf499d2ba461aaaad0a2f74c4fcfc16fc4fcaf365",
 
-        label:"ETH Wallet Address",
+        label:
+            "ETH Wallet Address",
 
         warning:
-        "Send ETH only through the Ethereum network (ERC20). Verify the network before sending."
+            "Send ETH ONLY through the Ethereum network (ERC20). Verify the network before sending."
 
     }
 
@@ -1845,31 +1571,28 @@ const paymentData = {
 
 
 /* =========================================================
-STATE
+   STATE
 ========================================================= */
 
 let selectedPlan = "";
-
 let selectedAmount = "";
-
 let selectedPayment = "";
 
 
 /* =========================================================
-SELECT PLAN
+   SELECT PLAN
 ========================================================= */
 
-function selectPlan(name,amount,elementId){
+function selectPlan(name, amount, elementId){
 
     selectedPlan = name;
-
     selectedAmount = amount;
 
+    document.getElementById("planName").value =
+        name;
 
-    document.getElementById("planName").value = name;
-
-    document.getElementById("planAmount").value = amount;
-
+    document.getElementById("planAmount").value =
+        amount;
 
     document.getElementById("selectedPlanText").textContent =
         name + " — " + amount;
@@ -1885,7 +1608,6 @@ function selectPlan(name,amount,elementId){
     const selectedCard =
         document.getElementById(elementId);
 
-
     if(selectedCard){
 
         selectedCard.classList.add("selected");
@@ -1897,57 +1619,65 @@ function selectPlan(name,amount,elementId){
         "block";
 
 
-    setTimeout(function(){
+    document.getElementById("paymentSection").scrollIntoView({
 
-        document.getElementById("paymentSection").scrollIntoView({
+        behavior:"smooth",
 
-            behavior:"smooth",
+        block:"start"
 
-            block:"start"
-
-        });
-
-    },100);
+    });
 
 }
 
 
 /* =========================================================
-SELECT PAYMENT
+   SELECT PAYMENT
 ========================================================= */
 
 function selectPayment(method){
 
     if(!selectedPlan){
 
-        showError("Please select a VIP plan first.");
+        showError(
+            "Please select a VIP plan first."
+        );
 
         return;
 
     }
 
 
-    selectedPayment = method;
-
-
-    const data = paymentData[method];
+    const data =
+        paymentData[method];
 
 
     if(!data){
 
-        showError("Payment method unavailable.");
+        showError(
+            "Payment method unavailable."
+        );
 
         return;
 
     }
 
 
-    document.querySelectorAll(".payment-method").forEach(function(button){
+    selectedPayment =
+        method;
+
+
+    /* Remove old selected */
+
+    document
+    .querySelectorAll(".payment-method")
+    .forEach(function(button){
 
         button.classList.remove("selected");
 
     });
 
+
+    /* Select current */
 
     const selectedButton =
         document.querySelector(
@@ -1964,16 +1694,18 @@ function selectPayment(method){
     }
 
 
+    /* Show payment box */
+
     const paymentBox =
         document.getElementById("paymentBox");
-
 
     paymentBox.classList.remove("hidden");
 
 
+    /* Icon */
+
     const icon =
         document.getElementById("paymentTitleIcon");
-
 
     icon.innerHTML =
         '<i class="' +
@@ -1983,17 +1715,25 @@ function selectPayment(method){
         '"></i>';
 
 
+    /* Title */
+
     document.getElementById("paymentTitle").textContent =
         data.title;
 
+
+    /* Network */
 
     document.getElementById("paymentNetwork").textContent =
         data.network;
 
 
+    /* Amount */
+
     document.getElementById("paymentAmount").textContent =
         selectedAmount;
 
+
+    /* Address */
 
     document.getElementById("addressLabel").textContent =
         data.label;
@@ -2007,16 +1747,27 @@ function selectPayment(method){
         data.address;
 
 
+    /* Warning */
+
     document.getElementById("networkWarning").textContent =
         data.warning;
 
+
+    /* Hidden field */
 
     document.getElementById("paymentMethod").value =
         method;
 
 
-    generateQR(data.address,method);
+    /* QR */
 
+    generateQR(
+        data.address,
+        method
+    );
+
+
+    /* Scroll */
 
     setTimeout(function(){
 
@@ -2034,19 +1785,21 @@ function selectPayment(method){
 
 
 /* =========================================================
-QR
+   QR CODE
 ========================================================= */
 
-function generateQR(value,method){
+function generateQR(value, method){
 
     const qrContainer =
         document.getElementById("qrcode");
 
 
-    qrContainer.innerHTML = "";
+    qrContainer.innerHTML =
+        "";
 
 
-    let qrValue = value;
+    let qrValue =
+        value;
 
 
     if(method === "Binance Pay"){
@@ -2063,21 +1816,25 @@ function generateQR(value,method){
 
             text:qrValue,
 
-            width:159,
+            width:164,
 
-            height:159,
+            height:164,
 
             colorDark:"#000000",
 
             colorLight:"#ffffff",
 
-            correctLevel:QRCode.CorrectLevel.H
+            correctLevel:
+                QRCode.CorrectLevel.H
 
         });
 
     }catch(error){
 
-        console.error(error);
+        console.error(
+            "QR generation failed:",
+            error
+        );
 
         qrContainer.innerHTML =
             '<div class="text-black text-[9px] text-center p-3">' +
@@ -2090,7 +1847,7 @@ function generateQR(value,method){
 
 
 /* =========================================================
-COPY
+   COPY
 ========================================================= */
 
 async function copyPaymentDetails(){
@@ -2111,20 +1868,27 @@ async function copyPaymentDetails(){
 
     try{
 
-        await navigator.clipboard.writeText(address);
+        await navigator.clipboard.writeText(
+            address
+        );
 
     }catch(error){
 
         const temp =
             document.createElement("textarea");
 
-        temp.value = address;
+        temp.value =
+            address;
 
-        document.body.appendChild(temp);
+        document.body.appendChild(
+            temp
+        );
 
         temp.select();
 
-        document.execCommand("copy");
+        document.execCommand(
+            "copy"
+        );
 
         temp.remove();
 
@@ -2135,12 +1899,16 @@ async function copyPaymentDetails(){
         document.getElementById("copyStatus");
 
 
-    status.classList.remove("hidden");
+    status.classList.remove(
+        "hidden"
+    );
 
 
     setTimeout(function(){
 
-        status.classList.add("hidden");
+        status.classList.add(
+            "hidden"
+        );
 
     },2000);
 
@@ -2148,7 +1916,7 @@ async function copyPaymentDetails(){
 
 
 /* =========================================================
-ERROR
+   ERROR
 ========================================================= */
 
 function showError(message){
@@ -2173,345 +1941,366 @@ function showError(message){
 
 
 /* =========================================================
-FORM SUBMIT
+   FORM SUBMIT
 ========================================================= */
 
 document
 .getElementById("premiumForm")
-.addEventListener("submit",async function(event){
+.addEventListener(
+    "submit",
+    async function(event){
 
-    event.preventDefault();
-
-
-    const successBox =
-        document.getElementById("successBox");
+        event.preventDefault();
 
 
-    const errorBox =
-        document.getElementById("errorBox");
+        const successBox =
+            document.getElementById("successBox");
 
 
-    const errorText =
-        document.getElementById("errorText");
+        const errorBox =
+            document.getElementById("errorBox");
 
 
-    const submitBtn =
-        document.getElementById("submitBtn");
+        const errorText =
+            document.getElementById("errorText");
 
 
-    successBox.style.display = "none";
-
-    errorBox.style.display = "none";
-
-
-    /* PLAN */
-
-    if(!selectedPlan){
-
-        showError(
-            "Please select a VIP plan first."
-        );
-
-        return;
-
-    }
+        const submitBtn =
+            document.getElementById("submitBtn");
 
 
-    /* PAYMENT */
-
-    if(!selectedPayment){
-
-        showError(
-            "Please select a payment method first."
-        );
-
-        return;
-
-    }
-
-
-    const transactionId =
-        document
-        .getElementById("transactionId")
-        .value
-        .trim();
-
-
-    if(!transactionId){
-
-        showError(
-            "Please enter your Transaction ID / TxHash after payment."
-        );
-
-        document
-        .getElementById("transactionId")
-        .focus();
-
-        return;
-
-    }
-
-
-    const formData = {
-
-        name:
-        document
-        .getElementById("name")
-        .value
-        .trim(),
-
-
-        whatsapp:
-        document
-        .getElementById("whatsapp")
-        .value
-        .trim(),
-
-
-        email:
-        document
-        .getElementById("email")
-        .value
-        .trim(),
-
-
-        plan_name:
-        document
-        .getElementById("planName")
-        .value,
-
-
-        amount:
-        document
-        .getElementById("planAmount")
-        .value,
-
-
-        payment_method:
-        document
-        .getElementById("paymentMethod")
-        .value,
-
-
-        payment_address:
-        document
-        .getElementById("paymentAddressHidden")
-        .value,
-
-
-        transaction_id:
-        transactionId,
-
-
-        message:
-        document
-        .getElementById("message")
-        .value
-        .trim()
-
-    };
-
-
-    if(
-        !formData.name ||
-        !formData.whatsapp ||
-        !formData.email ||
-        !formData.plan_name ||
-        !formData.amount ||
-        !formData.payment_method ||
-        !formData.transaction_id
-    ){
-
-        errorText.textContent =
-            "Please complete all required fields.";
+        successBox.style.display =
+            "none";
 
 
         errorBox.style.display =
-            "block";
+            "none";
 
 
-        return;
+        /* PLAN */
 
-    }
+        if(!selectedPlan){
 
+            showError(
+                "Please select a VIP plan first."
+            );
 
-    submitBtn.disabled = true;
+            return;
 
-
-    submitBtn.innerHTML =
-        '<i class="fas fa-spinner fa-spin mr-2"></i>' +
-        ' Sending Payment Details...';
-
-
-    try{
-
-        /*
-        Existing backend endpoint preserved.
-        No Supabase/Firebase used.
-        */
-
-        const response =
-            await fetch("/api/premium",{
-
-                method:"POST",
-
-                headers:{
-                    "Content-Type":"application/json"
-                },
-
-                body:JSON.stringify(formData)
-
-            });
+        }
 
 
-        let result = {};
+        /* PAYMENT */
+
+        if(!selectedPayment){
+
+            showError(
+                "Please select a payment method first."
+            );
+
+            return;
+
+        }
+
+
+        /* TRANSACTION */
+
+        const transactionId =
+            document
+            .getElementById("transactionId")
+            .value
+            .trim();
+
+
+        if(!transactionId){
+
+            showError(
+                "Please enter your Transaction ID / TxHash after payment."
+            );
+
+            document
+            .getElementById("transactionId")
+            .focus();
+
+            return;
+
+        }
+
+
+        /* FORM DATA */
+
+        const formData = {
+
+            name:
+                document
+                .getElementById("name")
+                .value
+                .trim(),
+
+            whatsapp:
+                document
+                .getElementById("whatsapp")
+                .value
+                .trim(),
+
+            email:
+                document
+                .getElementById("email")
+                .value
+                .trim(),
+
+            plan_name:
+                document
+                .getElementById("planName")
+                .value,
+
+            amount:
+                document
+                .getElementById("planAmount")
+                .value,
+
+            payment_method:
+                document
+                .getElementById("paymentMethod")
+                .value,
+
+            payment_address:
+                document
+                .getElementById("paymentAddressHidden")
+                .value,
+
+            transaction_id:
+                transactionId,
+
+            message:
+                document
+                .getElementById("message")
+                .value
+                .trim()
+
+        };
+
+
+        /* REQUIRED */
+
+        if(
+            !formData.name ||
+            !formData.whatsapp ||
+            !formData.email ||
+            !formData.plan_name ||
+            !formData.amount ||
+            !formData.payment_method ||
+            !formData.payment_address ||
+            !formData.transaction_id
+        ){
+
+            errorText.textContent =
+                "Please complete all required fields.";
+
+            errorBox.style.display =
+                "block";
+
+            return;
+
+        }
+
+
+        /* LOADING */
+
+        submitBtn.disabled =
+            true;
+
+
+        submitBtn.innerHTML =
+            '<i class="fas fa-spinner fa-spin mr-2"></i>' +
+            ' Sending Payment Details...';
 
 
         try{
 
-            result = await response.json();
+            /*
+              Existing Telegram notification endpoint.
+              No Supabase/Firebase used.
+            */
 
-        }catch(parseError){
+            const response =
+                await fetch(
+                    "/api/premium",
+                    {
 
-            result = {};
+                        method:"POST",
+
+                        headers:{
+                            "Content-Type":
+                                "application/json"
+                        },
+
+                        body:
+                            JSON.stringify(
+                                formData
+                            )
+
+                    }
+                );
+
+
+            let result = {};
+
+
+            try{
+
+                result =
+                    await response.json();
+
+            }catch(parseError){
+
+                result = {};
+
+            }
+
+
+            if(
+                !response.ok ||
+                !result.success
+            ){
+
+                throw new Error(
+
+                    result.message ||
+                    "Failed to submit payment details."
+
+                );
+
+            }
+
+
+            /* SUCCESS */
+
+            successBox.style.display =
+                "block";
+
+
+            document
+            .getElementById("premiumForm")
+            .reset();
+
+
+            selectedPlan = "";
+            selectedAmount = "";
+            selectedPayment = "";
+
+
+            document
+            .getElementById("planName")
+            .value = "";
+
+
+            document
+            .getElementById("planAmount")
+            .value = "";
+
+
+            document
+            .getElementById("paymentMethod")
+            .value = "";
+
+
+            document
+            .getElementById("paymentAddressHidden")
+            .value = "";
+
+
+            document
+            .getElementById("selectedPlanText")
+            .textContent =
+                "Please select a plan above";
+
+
+            document
+            .getElementById("paymentBox")
+            .classList.add("hidden");
+
+
+            document
+            .getElementById("paymentSection")
+            .style.display =
+                "none";
+
+
+            document
+            .querySelectorAll(".plan")
+            .forEach(function(card){
+
+                card.classList.remove(
+                    "selected"
+                );
+
+            });
+
+
+            document
+            .querySelectorAll(".payment-method")
+            .forEach(function(button){
+
+                button.classList.remove(
+                    "selected"
+                );
+
+            });
+
+
+            document
+            .getElementById("qrcode")
+            .innerHTML =
+                "";
+
+
+            successBox.scrollIntoView({
+
+                behavior:"smooth",
+
+                block:"center"
+
+            });
+
+
+        }catch(error){
+
+            console.error(error);
+
+
+            errorText.textContent =
+                error.message ||
+                "Unable to submit application. Please try again.";
+
+
+            errorBox.style.display =
+                "block";
+
+
+            errorBox.scrollIntoView({
+
+                behavior:"smooth",
+
+                block:"center"
+
+            });
+
+
+        }finally{
+
+            submitBtn.disabled =
+                false;
+
+
+            submitBtn.innerHTML =
+                '<i class="fas fa-paper-plane mr-2"></i>' +
+                ' Submit VIP Payment';
 
         }
-
-
-        if(
-            !response.ok ||
-            !result.success
-        ){
-
-            throw new Error(
-                result.message ||
-                "Failed to submit payment details."
-            );
-
-        }
-
-
-        /* SUCCESS */
-
-        successBox.style.display =
-            "block";
-
-
-        document
-        .getElementById("premiumForm")
-        .reset();
-
-
-        selectedPlan = "";
-
-        selectedAmount = "";
-
-        selectedPayment = "";
-
-
-        document
-        .getElementById("planName")
-        .value = "";
-
-
-        document
-        .getElementById("planAmount")
-        .value = "";
-
-
-        document
-        .getElementById("paymentMethod")
-        .value = "";
-
-
-        document
-        .getElementById("paymentAddressHidden")
-        .value = "";
-
-
-        document
-        .getElementById("selectedPlanText")
-        .textContent =
-            "Please select a plan above";
-
-
-        document
-        .getElementById("paymentBox")
-        .classList.add("hidden");
-
-
-        document
-        .getElementById("paymentSection")
-        .style.display = "none";
-
-
-        document
-        .querySelectorAll(".plan")
-        .forEach(function(card){
-
-            card.classList.remove("selected");
-
-        });
-
-
-        document
-        .querySelectorAll(".payment-method")
-        .forEach(function(button){
-
-            button.classList.remove("selected");
-
-        });
-
-
-        document
-        .getElementById("qrcode")
-        .innerHTML = "";
-
-
-        successBox.scrollIntoView({
-
-            behavior:"smooth",
-
-            block:"center"
-
-        });
-
-
-    }catch(error){
-
-        console.error(error);
-
-
-        errorText.textContent =
-            error.message ||
-            "Unable to submit application. Please try again.";
-
-
-        errorBox.style.display =
-            "block";
-
-
-        errorBox.scrollIntoView({
-
-            behavior:"smooth",
-
-            block:"center"
-
-        });
-
-
-    }finally{
-
-        submitBtn.disabled = false;
-
-
-        submitBtn.innerHTML =
-            '<i class="fas fa-paper-plane mr-2"></i>' +
-            ' Submit VIP Payment';
 
     }
-
-});
+);
 
 </script>
 
