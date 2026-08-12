@@ -11,28 +11,27 @@ export default async function handler(req, res) {
       name,
       whatsapp,
       email,
-      preferred_broker,
-      platform_type,
-      broker_server,
-      trading_login,
-      trading_password,
-      account_size,
+      broker,
+      platform,
+      server,
+      accountSize,
+      risk,
+      message: additionalMessage,
     } = req.body || {};
 
     if (
       !name ||
       !whatsapp ||
       !email ||
-      !preferred_broker ||
-      !platform_type ||
-      !broker_server ||
-      !trading_login ||
-      !trading_password ||
-      !account_size
+      !broker ||
+      !platform ||
+      !server ||
+      !accountSize ||
+      !risk
     ) {
       return res.status(400).json({
         success: false,
-        message: "All application fields are required.",
+        message: "Please complete all required fields.",
       });
     }
 
@@ -49,35 +48,37 @@ export default async function handler(req, res) {
     const message = `
 🚨 NEW ACCOUNT MANAGEMENT APPLICATION
 
-👤 Full Name:
+━━━━━━━━━━━━━━━━━━
+
+👤 FULL NAME
 ${name}
 
-📱 WhatsApp:
+📱 WHATSAPP
 ${whatsapp}
 
-📧 Email:
+📧 EMAIL
 ${email}
 
-🏦 Preferred Broker:
-${preferred_broker}
+🏦 BROKER
+${broker}
 
-💻 Platform:
-${platform_type}
+💻 PLATFORM
+${platform}
 
-🖥 Broker Server:
-${broker_server}
+🖥 BROKER SERVER
+${server}
 
-🔢 Trading Login:
-${trading_login}
+💰 ACCOUNT SIZE
+${accountSize}
 
-🔐 Trading Password:
-${trading_password}
+⚠️ RISK PREFERENCE
+${risk}
 
-💰 Account Size:
-${account_size}
+📝 ADDITIONAL INFORMATION
+${additionalMessage || "Not provided"}
 
 ━━━━━━━━━━━━━━━━━━
-🌐 Submitted from FX 7 sTarZ
+🌐 Submitted from Forex 7 StarZ
 ━━━━━━━━━━━━━━━━━━
 `;
 
@@ -110,6 +111,7 @@ ${account_size}
       success: true,
       message: "Application submitted successfully.",
     });
+
   } catch (error) {
     console.error("Server error:", error);
 
