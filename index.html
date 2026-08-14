@@ -551,41 +551,39 @@
                     </p>
 
                     <!-- HOME PAGE MAIN BUTTONS -->
-                    <div class="flex flex-col sm:flex-row gap-3 pt-2">
+                    <div class="space-y-2.5 pt-2">
 
-                        <!-- ACCOUNT MANAGEMENT -->
-                        <a href="account-management.html"
-                           class="flex-1 group bg-gradient-to-r from-cyan-500 to-emerald-500 hover:from-cyan-400 hover:to-emerald-400 text-black font-extrabold px-5 py-3 rounded-xl text-xs sm:text-sm flex items-center justify-center gap-2 transition-all duration-300 shadow-neon-emerald hover:scale-[1.02]">
+                        <div class="grid grid-cols-2 gap-2.5">
 
-                            <i class="fas fa-user-shield text-sm"></i>
+                            <!-- ACCOUNT MANAGEMENT -->
+                            <a href="account-management.html"
+                               class="group bg-gradient-to-r from-cyan-500 to-emerald-500 hover:from-cyan-400 hover:to-emerald-400 text-black font-extrabold px-3 sm:px-5 py-3 rounded-xl text-xs sm:text-sm flex items-center justify-center gap-1.5 sm:gap-2 transition-all duration-300 shadow-neon-emerald hover:scale-[1.02]">
 
-                            <span>Account Management</span>
+                                <i class="fas fa-user-shield text-sm"></i>
 
-                            <i class="fas fa-arrow-right text-[10px] transition-transform group-hover:translate-x-1"></i>
+                                <span>Account Management</span>
 
-                        </a>
+                            </a>
 
-                        <!-- PREMIUM -->
-                        <a href="premium.html"
-                           class="flex-1 group bg-gradient-to-r from-amber-500 to-orange-500 hover:from-amber-400 hover:to-orange-400 text-black font-extrabold px-5 py-3 rounded-xl text-xs sm:text-sm flex items-center justify-center gap-2 transition-all duration-300 shadow-neon-gold hover:scale-[1.02]">
+                            <!-- PREMIUM -->
+                            <a href="premium.html"
+                               class="group bg-gradient-to-r from-amber-500 to-orange-500 hover:from-amber-400 hover:to-orange-400 text-black font-extrabold px-3 sm:px-5 py-3 rounded-xl text-xs sm:text-sm flex items-center justify-center gap-1.5 sm:gap-2 transition-all duration-300 shadow-neon-gold hover:scale-[1.02]">
 
-                            <i class="fas fa-crown text-sm"></i>
+                                <i class="fas fa-crown text-sm"></i>
 
-                            <span>Premium Signals</span>
+                                <span>Premium Signals</span>
 
-                            <i class="fas fa-arrow-right text-[10px] transition-transform group-hover:translate-x-1"></i>
+                            </a>
 
-                        </a>
+                        </div>
 
                         <!-- BLOG -->
                         <a href="blog.html"
-                           class="flex-1 group bg-slate-900/80 border border-emerald-500/30 hover:border-emerald-400 text-emerald-400 hover:text-emerald-300 font-extrabold px-5 py-3 rounded-xl text-xs sm:text-sm flex items-center justify-center gap-2 transition-all duration-300 hover:scale-[1.02]">
+                           class="group w-full bg-slate-900/80 border border-emerald-500/30 hover:border-emerald-400 text-emerald-400 hover:text-emerald-300 font-extrabold px-5 py-3 rounded-xl text-xs sm:text-sm flex items-center justify-center gap-2 transition-all duration-300 hover:scale-[1.02]">
 
                             <i class="fas fa-book text-sm"></i>
 
                             <span>Read Trading Guides</span>
-
-                            <i class="fas fa-arrow-right text-[10px] transition-transform group-hover:translate-x-1"></i>
 
                         </a>
 
@@ -1300,28 +1298,11 @@
 
                     </div>
 
-                    <div class="depth-layer-deep flex flex-col sm:flex-row flex-wrap gap-2.5 justify-end">
+                    <div class="depth-layer-deep space-y-2.5">
 
-                        <a href="account-management.html"
-                           class="bg-cyan-500 hover:bg-cyan-400 text-black font-extrabold px-4 py-2.5 rounded-xl text-xs flex items-center justify-center gap-2 transition-transform shadow-neon-sky">
-
-                            <i class="fas fa-user-shield"></i>
-
-                            <span>Account Management</span>
-
-                        </a>
-
-                        <a href="premium.html"
-                           class="bg-amber-500 hover:bg-amber-400 text-black font-extrabold px-4 py-2.5 rounded-xl text-xs flex items-center justify-center gap-2 transition-transform shadow-neon-gold">
-
-                            <i class="fas fa-crown"></i>
-
-                            <span>Premium</span>
-
-                        </a>
-
+                        <!-- BLOG - own line -->
                         <a href="blog.html"
-                           class="bg-slate-800 hover:bg-slate-700 text-emerald-400 border border-emerald-500/30 font-extrabold px-4 py-2.5 rounded-xl text-xs flex items-center justify-center gap-2 transition-transform">
+                           class="w-full bg-slate-800 hover:bg-slate-700 text-emerald-400 border border-emerald-500/30 font-extrabold px-4 py-2.5 rounded-xl text-xs flex items-center justify-center gap-2 transition-transform">
 
                             <i class="fas fa-book"></i>
 
@@ -1329,44 +1310,67 @@
 
                         </a>
 
-                        <a href="https://wa.me/923093958600?text=i%20will%20contact%20from%20fx7starz%20site"
-                           target="_blank"
-                           class="bg-emerald-500 hover:bg-emerald-400 text-black font-extrabold px-4 py-2.5 rounded-xl text-xs flex items-center justify-center gap-2 transition-transform shadow-neon-emerald">
+                        <!-- REST OF BUTTONS - 2 per row -->
+                        <div class="grid grid-cols-2 gap-2.5">
 
-                            <i class="fab fa-whatsapp text-base"></i>
+                            <a href="account-management.html"
+                               class="bg-cyan-500 hover:bg-cyan-400 text-black font-extrabold px-3 py-2.5 rounded-xl text-xs flex items-center justify-center gap-1.5 transition-transform shadow-neon-sky">
 
-                            <span>WhatsApp</span>
+                                <i class="fas fa-user-shield"></i>
 
-                        </a>
+                                <span>Account Management</span>
 
-                        <a href="https://t.me/fx_support9?text=i%20will%20contact%20from%20fx7starz%20site"
-                           target="_blank"
-                           class="bg-sky-500 hover:bg-sky-400 text-black font-extrabold px-4 py-2.5 rounded-xl text-xs flex items-center justify-center gap-2 transition-transform shadow-neon-sky">
+                            </a>
 
-                            <i class="fab fa-telegram text-base"></i>
+                            <a href="premium.html"
+                               class="bg-amber-500 hover:bg-amber-400 text-black font-extrabold px-3 py-2.5 rounded-xl text-xs flex items-center justify-center gap-1.5 transition-transform shadow-neon-gold">
 
-                            <span>Telegram</span>
+                                <i class="fas fa-crown"></i>
 
-                        </a>
+                                <span>Premium</span>
 
-                        <a href="mailto:mybusiness309@gmail.com"
-                           class="bg-slate-800 hover:bg-slate-700 text-slate-200 border border-slate-700 font-bold px-4 py-2.5 rounded-xl text-xs flex items-center justify-center gap-2 transition-transform">
+                            </a>
 
-                            <i class="fas fa-envelope text-cyan-400"></i>
+                            <a href="https://wa.me/923093958600?text=i%20will%20contact%20from%20fx7starz%20site"
+                               target="_blank"
+                               class="bg-emerald-500 hover:bg-emerald-400 text-black font-extrabold px-3 py-2.5 rounded-xl text-xs flex items-center justify-center gap-1.5 transition-transform shadow-neon-emerald">
 
-                            <span>Email</span>
+                                <i class="fab fa-whatsapp text-base"></i>
 
-                        </a>
+                                <span>WhatsApp</span>
 
-                        <a href="https://one.exnessonelink.com/a/vtkbbmje"
-                           target="_blank"
-                           class="bg-gradient-to-r from-amber-500 to-emerald-500 hover:from-amber-400 hover:to-emerald-400 text-black font-extrabold px-4 py-2.5 rounded-xl text-xs flex items-center justify-center gap-2 transition-transform shadow-neon-gold">
+                            </a>
 
-                            <i class="fas fa-crown"></i>
+                            <a href="https://t.me/fx_support9?text=i%20will%20contact%20from%20fx7starz%20site"
+                               target="_blank"
+                               class="bg-sky-500 hover:bg-sky-400 text-black font-extrabold px-3 py-2.5 rounded-xl text-xs flex items-center justify-center gap-1.5 transition-transform shadow-neon-sky">
 
-                            <span>VIP Account</span>
+                                <i class="fab fa-telegram text-base"></i>
 
-                        </a>
+                                <span>Telegram</span>
+
+                            </a>
+
+                            <a href="mailto:mybusiness309@gmail.com"
+                               class="bg-slate-800 hover:bg-slate-700 text-slate-200 border border-slate-700 font-bold px-3 py-2.5 rounded-xl text-xs flex items-center justify-center gap-1.5 transition-transform">
+
+                                <i class="fas fa-envelope text-cyan-400"></i>
+
+                                <span>Email</span>
+
+                            </a>
+
+                            <a href="https://one.exnessonelink.com/a/vtkbbmje"
+                               target="_blank"
+                               class="bg-gradient-to-r from-amber-500 to-emerald-500 hover:from-amber-400 hover:to-emerald-400 text-black font-extrabold px-3 py-2.5 rounded-xl text-xs flex items-center justify-center gap-1.5 transition-transform shadow-neon-gold">
+
+                                <i class="fas fa-crown"></i>
+
+                                <span>VIP Account</span>
+
+                            </a>
+
+                        </div>
 
                     </div>
 
