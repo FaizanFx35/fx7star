@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Calculadora Forex Gratis | Pips, Margen y Tamaño de Posición - Forex 7 sTarZ</title>
+<meta name="description" content="Calculadora forex gratis: calcula el valor del pip, el margen requerido y el tamaño de posición ideal antes de operar XAUUSD, EURUSD y más pares.">
+<meta name="keywords" content="calculadora forex, calculadora de pips, calculadora de margen forex, tamaño de posición forex, calculadora lotes forex">
+<link rel="canonical" href="https://fx7star.vercel.app/forex-en-espanol/calculadora-forex.html">
+
+<meta property="og:title" content="Calculadora Forex Gratis | Forex 7 sTarZ">
+<meta property="og:description" content="Calcula pips, margen y tamaño de posición antes de operar, gratis y en español.">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://fx7star.vercel.app/forex-en-espanol/calculadora-forex.html">
+
+<script src="https://cdn.tailwindcss.com"></script>
+<style>
+  body { background-color: #0a0a0f; color: #e5e7eb; font-family: 'Inter', system-ui, sans-serif; }
+  .gradient-text { background: linear-gradient(90deg,#facc15,#f59e0b); -webkit-background-clip: text; background-clip: text; color: transparent; }
+  .prose-custom p { margin-bottom: 1rem; line-height: 1.75; color: #cbd5e1; }
+  .prose-custom h2 { font-size: 1.5rem; font-weight: 700; margin-top: 2.5rem; margin-bottom: .75rem; }
+  .prose-custom h3 { font-size: 1.15rem; font-weight: 600; margin-top: 1.5rem; margin-bottom: .5rem; color: #facc15; }
+  .prose-custom ul { list-style: disc; padding-left: 1.25rem; color: #cbd5e1; margin-bottom: 1rem; }
+  .prose-custom li { margin-bottom: .4rem; }
+  input, select { background:#111827; border:1px solid #1f2937; color:#e5e7eb; border-radius:.5rem; padding:.55rem .75rem; width:100%; font-size:.9rem; }
+  label { font-size:.8rem; color:#9ca3af; display:block; margin-bottom:.3rem; }
+</style>
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "WebApplication",
+  "name": "Calculadora Forex",
+  "applicationCategory": "FinanceApplication",
+  "description": "Calculadora gratuita para tamaño de posición, valor de pip y margen en forex.",
+  "url": "https://fx7star.vercel.app/forex-en-espanol/calculadora-forex.html"
+}
+</script>
+</head>
+<body class="min-h-screen">
+
+<nav class="border-b border-gray-800 px-6 py-4 flex items-center justify-between">
+  <a href="/" class="text-xl font-bold">⚡ Forex 7 <span class="gradient-text">sTarZ</span></a>
+  <div class="flex gap-4 text-sm text-gray-300">
+    <a href="/forex-en-espanol/" class="hover:text-yellow-400">🇪🇸 Español</a>
+    <a href="/forex-en-espanol/calculadora-forex.html" class="text-yellow-400">Calculadora</a>
+  </div>
+</nav>
+
+<div class="max-w-3xl mx-auto px-6 text-xs text-gray-500 pt-4">
+  <a href="/forex-en-espanol/" class="hover:text-yellow-400">Forex en Español</a> / Calculadora Forex
+</div>
+
+<header class="max-w-3xl mx-auto px-6 pt-6 pb-8">
+  <span class="inline-block bg-purple-500/10 text-purple-400 text-xs font-semibold px-3 py-1 rounded-full mb-4">🧮 HERRAMIENTA GRATUITA</span>
+  <h1 class="text-3xl md:text-4xl font-extrabold leading-tight">
+    Calculadora Forex: <span class="gradient-text">Tamaño de Posición</span>
+  </h1>
+  <p class="mt-4 text-gray-400">
+    Calcula el tamaño de posición ideal según tu capital, riesgo y stop loss — antes de abrir cualquier
+    operación.
+  </p>
+</header>
+
+<main class="max-w-3xl mx-auto px-6 pb-16">
+
+  <div class="border border-gray-800 rounded-xl p-6 bg-gray-900/40 mb-4">
+    <div class="grid sm:grid-cols-2 gap-4 mb-5">
+      <div>
+        <label>Capital de la cuenta (USD)</label>
+        <input type="number" id="capital" value="1000" min="0">
+      </div>
+      <div>
+        <label>Riesgo por operación (%)</label>
+        <input type="number" id="riesgo" value="1" min="0" step="0.1">
+      </div>
+      <div>
+        <label>Stop loss (en pips)</label>
+        <input type="number" id="stoploss" value="20" min="1">
+      </div>
+      <div>
+        <label>Valor del pip por lote estándar (USD)</label>
+        <input type="number" id="valorpip" value="10" min="0.01" step="0.01">
+      </div>
+    </div>
+    <button onclick="calcular()" class="w-full bg-gradient-to-r from-yellow-400 to-amber-500 text-black font-semibold py-2.5 rounded-lg text-sm">Calcular Tamaño de Posición</button>
+
+    <div id="resultado" class="mt-5 hidden">
+      <div class="grid sm:grid-cols-3 gap-3 text-center">
+        <div class="border border-gray-800 rounded-lg p-3">
+          <div class="text-xs text-gray-500">Riesgo en USD</div>
+          <div id="r-riesgo" class="text-lg font-bold text-yellow-400 mt-1">-</div>
+        </div>
+        <div class="border border-gray-800 rounded-lg p-3">
+          <div class="text-xs text-gray-500">Tamaño en lotes</div>
+          <div id="r-lotes" class="text-lg font-bold text-yellow-400 mt-1">-</div>
+        </div>
+        <div class="border border-gray-800 rounded-lg p-3">
+          <div class="text-xs text-gray-500">Unidades</div>
+          <div id="r-unidades" class="text-lg font-bold text-yellow-400 mt-1">-</div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <p class="text-xs text-gray-500 mb-10">* Cálculo educativo aproximado. El valor del pip real varía según el par y el bróker.</p>
+
+  <div class="prose-custom">
+    <h2>¿Cómo funciona esta calculadora forex?</h2>
+    <p>
+      Esta calculadora forex te ayuda a definir cuántos lotes operar según tu capital, el porcentaje de
+      riesgo que estás dispuesto a asumir y la distancia de tu stop loss en pips. Es una de las
+      herramientas más importantes en la gestión de riesgo, ya que evita que arriesgues más capital del
+      que planeaste.
+    </p>
+
+    <h2>Fórmula del tamaño de posición</h2>
+    <p>El cálculo se basa en tres pasos simples:</p>
+    <ul>
+      <li><strong>Riesgo en USD</strong> = Capital × (Riesgo % / 100)</li>
+      <li><strong>Tamaño en lotes</strong> = Riesgo en USD ÷ (Stop loss en pips × Valor del pip)</li>
+      <li><strong>Unidades</strong> = Lotes × 100,000 (tamaño de un lote estándar)</li>
+    </ul>
+
+    <h2>¿Por qué es importante calcular el tamaño de posición?</h2>
+    <p>
+      Muchos principiantes pierden capital no por elegir mal la dirección del mercado, sino por usar un
+      tamaño de posición demasiado grande para su capital. Calcular el tamaño correcto antes de operar
+      es lo que permite sobrevivir a una racha de pérdidas sin quedar fuera del mercado.
+    </p>
+
+    <h2>Regla general de gestión de riesgo</h2>
+    <p>
+      La mayoría de traders profesionales recomienda arriesgar entre el 1% y el 2% del capital por
+      operación. Así, incluso una serie de pérdidas consecutivas no compromete la cuenta por completo.
+    </p>
+  </div>
+
+  <div class="mt-10 border border-yellow-500/30 bg-yellow-500/5 rounded-xl p-6 text-center">
+    <p class="text-gray-200 font-medium mb-3">Aplica tu cálculo en un bróker confiable</p>
+    <a href="https://one.exnessonelink.com/a/vtkbbmje" target="_blank" rel="noopener sponsored" class="inline-block bg-gradient-to-r from-yellow-400 to-amber-500 text-black font-semibold px-6 py-2.5 rounded-lg text-sm">Abrir Cuenta en Exness</a>
+  </div>
+
+  <div class="mt-10 flex flex-wrap gap-3 text-sm">
+    <a href="/forex-en-espanol/educacion-forex.html" class="text-yellow-400 hover:underline">→ Qué es Forex</a>
+    <a href="/forex-en-espanol/senales-forex.html" class="text-yellow-400 hover:underline">→ Señales Forex</a>
+    <a href="/forex-en-espanol/calendario-economico.html" class="text-yellow-400 hover:underline">→ Calendario Económico</a>
+  </div>
+
+</main>
+
+<footer class="border-t border-gray-800 py-8 text-center text-xs text-gray-500">
+  © 2026 Forex 7 sTarZ. Todos los derechos reservados.
+</footer>
+
+<script>
+function calcular() {
+  const capital = parseFloat(document.getElementById('capital').value) || 0;
+  const riesgoPct = parseFloat(document.getElementById('riesgo').value) || 0;
+  const stoploss = parseFloat(document.getElementById('stoploss').value) || 1;
+  const valorPip = parseFloat(document.getElementById('valorpip').value) || 1;
+
+  const riesgoUSD = capital * (riesgoPct / 100);
+  const lotes = riesgoUSD / (stoploss * valorPip);
+  const unidades = lotes * 100000;
+
+  document.getElementById('r-riesgo').textContent = '$' + riesgoUSD.toFixed(2);
+  document.getElementById('r-lotes').textContent = lotes.toFixed(2);
+  document.getElementById('r-unidades').textContent = Math.round(unidades).toLocaleString('es-ES');
+  document.getElementById('resultado').classList.remove('hidden');
+}
+</script>
+
+</body>
+</html>
