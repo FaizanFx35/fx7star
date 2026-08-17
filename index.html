@@ -199,22 +199,23 @@
 
 <body class="bg-darkBg text-slate-200 font-sans antialiased selection:bg-accentEmerald selection:text-black relative overflow-x-hidden w-full">
 
-<!-- Clean Floating Language Selector -->
+
+<!-- Custom Clean Language Selector Widget -->
 <div id="google_translate_element" class="fixed top-3 right-3 z-[9999]"></div>
 
 <style>
-  /* Base element styling override */
+  /* Google default element styling override */
   #google_translate_element .goog-te-gadget {
     font-family: inherit !important;
     color: transparent !important;
     font-size: 0px !important;
   }
   
-  /* Style dropdown selector */
+  /* Modern Dark Dropdown Button */
   #google_translate_element .goog-te-gadget .goog-te-combo {
-    background-color: rgba(15, 23, 42, 0.95) !important;
+    background-color: #0f172a !important;
     color: #38bdf8 !important;
-    border: 1px solid rgba(51, 65, 85, 0.8) !important;
+    border: 1px solid #334155 !important;
     border-radius: 9999px !important;
     padding: 6px 14px !important;
     font-size: 12px !important;
@@ -222,16 +223,15 @@
     outline: none !important;
     cursor: pointer !important;
     box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.5) !important;
-    backdrop-filter: blur(8px) !important;
   }
 
-  /* Option items list inside dropdown */
+  /* List items inside dropdown */
   #google_translate_element .goog-te-combo option {
     background-color: #0f172a !important;
     color: #f8fafc !important;
   }
 
-  /* Hide default google top bar & logo */
+  /* Hide raw white popups & banners */
   .goog-te-banner-frame, 
   .skiptranslate > iframe,
   .goog-logo-link,
@@ -248,13 +248,14 @@
 function googleTranslateElementInit() {
   new google.translate.TranslateElement({
     pageLanguage: 'es',
+    // TOP 15 LANGUAGES SPECIFIED HERE:
+    includedLanguages: 'es,en,ur,hi,bn,zh-CN,ar,fa,ru,tr,fr,de,pt,id,ms',
     layout: google.translate.TranslateElement.InlineLayout.SIMPLE,
     autoDisplay: false
   }, 'google_translate_element');
 }
 </script>
 <script type="text/javascript" src="//translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"></script>
-
 
     
     
