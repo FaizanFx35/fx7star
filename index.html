@@ -199,6 +199,21 @@
 
 <body class="bg-darkBg text-slate-200 font-sans antialiased selection:bg-accentEmerald selection:text-black relative overflow-x-hidden w-full">
 
+
+<!-- Google Translate Widget -->
+<div id="google_translate_element"></div>
+
+<script type="text/javascript">
+function googleTranslateElementInit() {
+  new google.translate.TranslateElement({
+    pageLanguage: 'es',
+    layout: google.translate.TranslateElement.InlineLayout.SIMPLE
+  }, 'google_translate_element');
+}
+</script>
+<script type="text/javascript" src="//translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"></script>
+    
+    
     <!-- 3D Background -->
     <div id="canvas-container"
          class="fixed inset-0 pointer-events-none z-0 opacity-50 overflow-hidden">
