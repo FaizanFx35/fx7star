@@ -417,7 +417,7 @@
 ========================================================= -->
 
 <div id="google_translate_element"
-     class="fixed top-3 right-3 z-[9999]">
+     class="fixed -top-96 left-0 opacity-0 pointer-events-none w-0 h-0 overflow-hidden" aria-hidden="true">
 </div>
 
 
@@ -485,7 +485,7 @@
             pageLanguage: 'en',
 
             includedLanguages:
-                'en,es,ur,hi,bn,zh-CN,ar,fa,ru,tr,fr,de,pt,id,ms',
+                'en,es,ur,hi,ar,fa,bn,pa,ta,te,mr,gu,ml,kn,zh-CN,ja,ko,vi,th,ms,tl,ru,fr,de,pt,it,tr,id,nl,pl,uk,sw,ha,am,ne,si,ps,he,el',
 
             layout:
                 google.translate.TranslateElement.InlineLayout.SIMPLE,
@@ -501,6 +501,206 @@
 <script
     src="//translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"
     defer>
+</script>
+
+
+<!-- =========================================================
+     SELECT LANGUAGE (custom menu UI, drives Google Translate)
+========================================================= -->
+
+<script>
+(function () {
+
+    var LANGUAGES = [
+        { code: 'en',    label: 'English (Default)' },
+        { code: 'es',    label: 'Español (Spanish)' },
+        { code: 'ur',    label: 'اردو (Urdu)' },
+        { code: 'hi',    label: 'हिन्दी (Hindi)' },
+        { code: 'ar',    label: 'العربية (Arabic)' },
+        { code: 'fa',    label: 'فارسی (Persian)' },
+        { code: 'bn',    label: 'বাংলা (Bengali)' },
+        { code: 'pa',    label: 'ਪੰਜਾਬੀ (Punjabi)' },
+        { code: 'ta',    label: 'தமிழ் (Tamil)' },
+        { code: 'te',    label: 'తెలుగు (Telugu)' },
+        { code: 'mr',    label: 'मराठी (Marathi)' },
+        { code: 'gu',    label: 'ગુજરાતી (Gujarati)' },
+        { code: 'ml',    label: 'മലയാളം (Malayalam)' },
+        { code: 'kn',    label: 'ಕನ್ನಡ (Kannada)' },
+        { code: 'zh-CN', label: '中文 (Chinese)' },
+        { code: 'ja',    label: '日本語 (Japanese)' },
+        { code: 'ko',    label: '한국어 (Korean)' },
+        { code: 'vi',    label: 'Tiếng Việt (Vietnamese)' },
+        { code: 'th',    label: 'ไทย (Thai)' },
+        { code: 'ms',    label: 'Bahasa Melayu (Malay)' },
+        { code: 'tl',    label: 'Filipino (Tagalog)' },
+        { code: 'ru',    label: 'Русский (Russian)' },
+        { code: 'fr',    label: 'Français (French)' },
+        { code: 'de',    label: 'Deutsch (German)' },
+        { code: 'pt',    label: 'Português (Portuguese)' },
+        { code: 'it',    label: 'Italiano (Italian)' },
+        { code: 'tr',    label: 'Türkçe (Turkish)' },
+        { code: 'id',    label: 'Bahasa Indonesia (Indonesian)' },
+        { code: 'nl',    label: 'Nederlands (Dutch)' },
+        { code: 'pl',    label: 'Polski (Polish)' },
+        { code: 'uk',    label: 'Українська (Ukrainian)' },
+        { code: 'sw',    label: 'Kiswahili (Swahili)' },
+        { code: 'ha',    label: 'Hausa' },
+        { code: 'am',    label: 'አማርኛ (Amharic)' },
+        { code: 'ne',    label: 'नेपाली (Nepali)' },
+        { code: 'si',    label: 'සිංහල (Sinhala)' },
+        { code: 'ps',    label: 'پښتو (Pashto)' },
+        { code: 'he',    label: 'עברית (Hebrew)' },
+        { code: 'el',    label: 'Ελληνικά (Greek)' }
+    ];
+
+    function buildLanguageList() {
+
+        var list = document.getElementById('lang-list');
+
+        if (!list) return;
+
+        list.innerHTML = '';
+
+        LANGUAGES.forEach(function (lang) {
+
+            var btn = document.createElement('button');
+
+            btn.type = 'button';
+
+            btn.setAttribute('data-lang', lang.code);
+
+            btn.className = 'lang-option w-full text-left px-3 py-2 rounded-lg text-[11px] font-semibold text-slate-300 hover:bg-amber-500/10 hover:text-amber-400 transition-all flex items-center justify-between gap-2';
+
+            btn.innerHTML = '<span>' + lang.label + '</span>' +
+                '<i class="fas fa-check text-[10px] text-amber-400 lang-check hidden"></i>';
+
+            btn.onclick = function () {
+                setSiteLanguage(lang.code, lang.label);
+            };
+
+            list.appendChild(btn);
+
+        });
+
+    }
+
+    function applyGoogleTranslate(code, attemptsLeft) {
+
+        attemptsLeft = (attemptsLeft === undefined) ? 40 : attemptsLeft;
+
+        var combo = document.querySelector('#google_translate_element select.goog-te-combo');
+
+        if (combo) {
+
+            if (combo.value !== code) {
+
+                combo.value = code;
+
+                combo.dispatchEvent(new Event('change'));
+
+            }
+
+            return;
+
+        }
+
+        if (attemptsLeft > 0) {
+
+            setTimeout(function () {
+                applyGoogleTranslate(code, attemptsLeft - 1);
+            }, 250);
+
+        }
+
+    }
+
+    function updateLangUI(code, label) {
+
+        var current = document.getElementById('lang-current-label');
+
+        if (current) current.textContent = label || 'English';
+
+        document.querySelectorAll('.lang-check').forEach(function (el) {
+            el.classList.add('hidden');
+        });
+
+        var active = document.querySelector('.lang-option[data-lang="' + code + '"] .lang-check');
+
+        if (active) active.classList.remove('hidden');
+
+    }
+
+    function closeDrawerIfOpen() {
+
+        var d = document.getElementById('mobile-drawer');
+
+        if (d && d.classList.contains('drawer-open') && typeof toggleDrawer === 'function') {
+            toggleDrawer();
+        }
+
+    }
+
+    window.setSiteLanguage = function (code, label) {
+
+        localStorage.setItem('fx7star_lang', code);
+        localStorage.setItem('fx7star_lang_label', label);
+
+        updateLangUI(code, label);
+
+        if (code === 'en') {
+
+            document.cookie = 'googtrans=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;';
+            document.cookie = 'googtrans=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/; domain=.' + window.location.hostname + ';';
+
+            window.location.reload();
+
+        } else {
+
+            applyGoogleTranslate(code);
+
+            closeDrawerIfOpen();
+
+        }
+
+    };
+
+    window.toggleLangList = function () {
+
+        var list = document.getElementById('lang-list');
+        var chevron = document.getElementById('lang-accordion-chevron');
+
+        if (!list) return;
+
+        list.classList.toggle('hidden');
+
+        if (chevron) {
+            chevron.classList.toggle('fa-chevron-up');
+            chevron.classList.toggle('fa-chevron-down');
+        }
+
+    };
+
+    document.addEventListener('DOMContentLoaded', function () {
+
+        buildLanguageList();
+
+        var savedCode = localStorage.getItem('fx7star_lang');
+        var savedLabel = localStorage.getItem('fx7star_lang_label');
+
+        if (savedCode && savedCode !== 'en') {
+
+            updateLangUI(savedCode, savedLabel);
+            applyGoogleTranslate(savedCode);
+
+        } else {
+
+            updateLangUI('en', 'English (Default)');
+
+        }
+
+    });
+
+})();
 </script>
 
 
@@ -1126,6 +1326,41 @@
 
         </div>
 
+
+    </div>
+
+
+    <!-- SELECT LANGUAGE -->
+
+    <div class="pt-1 border-t border-slate-800/60 mt-1">
+
+        <button type="button"
+                id="lang-accordion-btn"
+                onclick="toggleLangList()"
+                class="w-full flex items-center justify-between gap-2 px-3 py-2.5 rounded-lg bg-amber-500/10 border border-amber-500/25 text-amber-400 text-xs font-bold transition-all">
+
+            <span class="flex items-center gap-2">
+                <i class="fas fa-language w-4"></i>
+                Select Language
+            </span>
+
+            <span class="flex items-center gap-1.5">
+                <span id="lang-current-label"
+                      class="notranslate px-2 py-0.5 rounded-full bg-amber-500/20 text-[10px]"
+                      translate="no">
+                    English
+                </span>
+                <i class="fas fa-chevron-down text-[9px]" id="lang-accordion-chevron"></i>
+            </span>
+
+        </button>
+
+
+        <div id="lang-list"
+             class="notranslate hidden mt-1.5 space-y-0.5 max-h-56 overflow-y-auto pr-1"
+             translate="no">
+            <!-- populated by JS: buildLanguageList() -->
+        </div>
 
     </div>
 
