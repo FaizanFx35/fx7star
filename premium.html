@@ -1241,20 +1241,21 @@ button:disabled{
             </div>
 
 
-            <!-- EMAIL -->
+            <!-- TELEGRAM USERNAME -->
 
             <div>
 
                 <label class="form-label">
-                    Email Address *
+                    Telegram Username *
                 </label>
 
                 <input
-                    id="email"
-                    name="email"
-                    type="email"
+                    id="telegram"
+                    name="telegram"
+                    type="text"
                     class="form-input"
-                    placeholder="your@email.com"
+                    placeholder="@username"
+                    autocomplete="off"
                     required>
 
             </div>
@@ -2057,9 +2058,9 @@ document
                 .value
                 .trim(),
 
-            email:
+            telegram:
                 document
-                .getElementById("email")
+                .getElementById("telegram")
                 .value
                 .trim(),
 
@@ -2100,7 +2101,7 @@ document
         if(
             !formData.name ||
             !formData.whatsapp ||
-            !formData.email ||
+            !formData.telegram ||
             !formData.plan_name ||
             !formData.amount ||
             !formData.payment_method ||
