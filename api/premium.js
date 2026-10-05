@@ -1,9 +1,19 @@
+const esc = (v) =>
+  String(v ?? "")
+    .replace(/&/g, "&amp;")
+    .replace(/</g, "&lt;")
+    .replace(/>/g, "&gt;");
+
+const waLink = (num) => {
+  const digits = String(num || "").replace(/\D/g, "");
+  return digits
+    ? `<a href="https://wa.me/${digits}">${esc(num)}</a>`
+    : esc(num);
+};
+
 export default async function handler(req, res) {
   if (req.method !== "POST") {
-    return res.status(405).json({
-      success: false,
-      message: "Method not allowed",
-    });
+    return res.status(405).json({ success: false, message: "Method not allowed" });
   }
 
   try {
@@ -18,14 +28,7 @@ export default async function handler(req, res) {
       message: userMessage,
     } = req.body || {};
 
-    if (
-      !name ||
-      !whatsapp ||
-      !telegram ||
-      !plan_name ||
-      !amount ||
-      !payment_method
-    ) {
+    if (!name || !whatsapp || !telegram || !plan_name || !amount || !payment_method) {
       return res.status(400).json({
         success: false,
         message: "Please complete all required fields.",
@@ -42,48 +45,41 @@ export default async function handler(req, res) {
       });
     }
 
-    const message = `
-🚨 NEW PREMIUM VIP APPLICATION
+    const tg = String(telegram).trim();
+    const tgHandle = tg.startsWith("@") ? tg : `@${tg}`;
 
-👤 Full Name:
-${name}
+    const text =
+`💎 <b>NEW VIP PAYMENT</b>
+━━━━━━━━━━━━━━━━━━
 
-📱 WhatsApp:
-${whatsapp}
+👤 <b>CLIENT</b>
+• <b>Name:</b> ${esc(name)}
+• <b>WhatsApp:</b> ${waLink(whatsapp)}
+• <b>Telegram:</b> ${esc(tgHandle)}
 
-✈️ Telegram Username:
-${telegram}
+⭐ <b>ORDER</b>
+• <b>Plan:</b> ${esc(plan_name)}
+• <b>Amount:</b> ${esc(amount)}
+• <b>Method:</b> ${esc(payment_method)}
 
-⭐ Selected Plan:
-${plan_name}
+🧾 <b>TX ID</b>
+<code>${esc(transaction_id || "Not provided")}</code>
 
-💵 Amount:
-${amount}
-
-💳 Payment Method:
-${payment_method}
-
-🧾 Transaction ID:
-${transaction_id || "Not provided"}
-
-💬 Additional Message:
-${userMessage || "None"}
+📝 <b>Note:</b> ${esc(userMessage || "—")}
 
 ━━━━━━━━━━━━━━━━━━
-🌐 Submitted from FX 7 sTarZ
-━━━━━━━━━━━━━━━━━━
-`;
+🌐 <i>Forex 7 StarZ</i>`;
 
     const telegramResponse = await fetch(
       `https://api.telegram.org/bot${botToken}/sendMessage`,
       {
         method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
+        headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
           chat_id: chatId,
-          text: message,
+          text,
+          parse_mode: "HTML",
+          disable_web_page_preview: true,
         }),
       }
     );
@@ -92,7 +88,6 @@ ${userMessage || "None"}
 
     if (!telegramResponse.ok || !telegramData.ok) {
       console.error("Telegram error:", telegramData);
-
       return res.status(500).json({
         success: false,
         message: "Failed to send Telegram notification.",
@@ -103,13 +98,8 @@ ${userMessage || "None"}
       success: true,
       message: "Premium application submitted successfully.",
     });
-
   } catch (error) {
     console.error("Premium API error:", error);
-
-    return res.status(500).json({
-      success: false,
-      message: "Something went wrong.",
-    });
+    return res.status(500).json({ success: false, message: "Something went wrong." });
   }
 }

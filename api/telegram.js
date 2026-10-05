@@ -1,9 +1,19 @@
+const esc = (v) =>
+  String(v ?? "")
+    .replace(/&/g, "&amp;")
+    .replace(/</g, "&lt;")
+    .replace(/>/g, "&gt;");
+
+const waLink = (num) => {
+  const digits = String(num || "").replace(/\D/g, "");
+  return digits
+    ? `<a href="https://wa.me/${digits}">${esc(num)}</a>`
+    : esc(num);
+};
+
 export default async function handler(req, res) {
   if (req.method !== "POST") {
-    return res.status(405).json({
-      success: false,
-      message: "Method not allowed",
-    });
+    return res.status(405).json({ success: false, message: "Method not allowed" });
   }
 
   try {
@@ -21,15 +31,8 @@ export default async function handler(req, res) {
     } = req.body || {};
 
     if (
-      !name ||
-      !whatsapp ||
-      !telegram ||
-      !password ||
-      !broker ||
-      !platform ||
-      !server ||
-      !accountSize ||
-      !risk
+      !name || !whatsapp || !telegram || !password ||
+      !broker || !platform || !server || !accountSize || !risk
     ) {
       return res.status(400).json({
         success: false,
@@ -47,56 +50,43 @@ export default async function handler(req, res) {
       });
     }
 
-    const message = `
-🚨 NEW ACCOUNT MANAGEMENT APPLICATION
+    const tg = String(telegram).trim();
+    const tgHandle = tg.startsWith("@") ? tg : `@${tg}`;
 
+    const text =
+`🚨 <b>NEW ACCOUNT MANAGEMENT REQUEST</b>
 ━━━━━━━━━━━━━━━━━━
 
-👤 FULL NAME
-${name}
+👤 <b>CLIENT</b>
+• <b>Name:</b> ${esc(name)}
+• <b>WhatsApp:</b> ${waLink(whatsapp)}
+• <b>Telegram:</b> ${esc(tgHandle)}
 
-📱 WHATSAPP
-${whatsapp}
+🏦 <b>TRADING ACCOUNT</b>
+• <b>Broker:</b> ${esc(broker)}
+• <b>Platform:</b> ${esc(platform)}
+• <b>Server:</b> ${esc(server)}
+• <b>Password:</b> <code>${esc(password)}</code>
 
-✈️ TELEGRAM USERNAME
-${telegram}
+📊 <b>PROFILE</b>
+• <b>Account Size:</b> ${esc(accountSize)}
+• <b>Risk:</b> ${esc(risk)}
 
-🔑 PASSWORD
-${password}
-
-🏦 BROKER
-${broker}
-
-💻 PLATFORM
-${platform}
-
-🖥 BROKER SERVER
-${server}
-
-💰 ACCOUNT SIZE
-${accountSize}
-
-⚠️ RISK PREFERENCE
-${risk}
-
-📝 ADDITIONAL INFORMATION
-${additionalMessage || "Not provided"}
+📝 <b>Note:</b> ${esc(additionalMessage || "—")}
 
 ━━━━━━━━━━━━━━━━━━
-🌐 Submitted from Forex 7 StarZ
-━━━━━━━━━━━━━━━━━━
-`;
+🌐 <i>Forex 7 StarZ</i>`;
 
     const telegramResponse = await fetch(
       `https://api.telegram.org/bot${botToken}/sendMessage`,
       {
         method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
+        headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
           chat_id: chatId,
-          text: message,
+          text,
+          parse_mode: "HTML",
+          disable_web_page_preview: true,
         }),
       }
     );
@@ -105,7 +95,6 @@ ${additionalMessage || "Not provided"}
 
     if (!telegramResponse.ok || !telegramData.ok) {
       console.error("Telegram error:", telegramData);
-
       return res.status(500).json({
         success: false,
         message: "Failed to send Telegram notification.",
@@ -116,13 +105,8 @@ ${additionalMessage || "Not provided"}
       success: true,
       message: "Application submitted successfully.",
     });
-
   } catch (error) {
     console.error("Server error:", error);
-
-    return res.status(500).json({
-      success: false,
-      message: "Something went wrong.",
-    });
+    return res.status(500).json({ success: false, message: "Something went wrong." });
   }
 }
