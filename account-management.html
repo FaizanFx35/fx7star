@@ -53,10 +53,11 @@ html,body{
 
 label{
     display:block;
-    color:#94a3b8;
-    font-size:11px;
-    font-weight:700;
-    margin-bottom:6px;
+    color:#ffffff;
+    font-size:12px;
+    font-weight:800;
+    letter-spacing:.04em;
+    margin-bottom:8px;
 }
 
 .plan{
@@ -87,7 +88,7 @@ label{
     to{transform:rotate(360deg)}
 }
 
-.hint{font-size:11px;color:#94a3b8;margin-top:6px;line-height:1.4}
+.hint{font-size:11px;color:#cbd5e1;margin-top:6px;line-height:1.4}
 .input.invalid{border-color:#ef4444 !important}
 .err{font-size:11px;color:#f87171;margin-top:6px;font-weight:600}
 </style>
@@ -254,20 +255,6 @@ label{
             </div>
 
 
-            <!-- BROKER -->
-            <div>
-                <label for="broker">BROKER NAME *</label>
-
-                <input
-                    id="broker"
-                    name="broker"
-                    class="input"
-                    type="text"
-                    placeholder="Example: Exness"
-                    required>
-            </div>
-
-
             <!-- PLATFORM -->
             <div>
                 <label for="platform">TRADING PLATFORM *</label>
@@ -291,6 +278,20 @@ label{
                     </option>
 
                 </select>
+            </div>
+
+
+            <!-- BROKER -->
+            <div>
+                <label for="broker">BROKER NAME *</label>
+
+                <input
+                    id="broker"
+                    name="broker"
+                    class="input"
+                    type="text"
+                    placeholder="Example: Exness"
+                    required>
             </div>
 
 
@@ -409,6 +410,7 @@ label{
 
                 </select>
             </div>
+
 
         </div>
 
