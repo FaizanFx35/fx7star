@@ -10,7 +10,7 @@ export default async function handler(req, res) {
     const {
       name,
       whatsapp,
-      email,
+      telegram,
       plan_name,
       amount,
       payment_method,
@@ -21,7 +21,7 @@ export default async function handler(req, res) {
     if (
       !name ||
       !whatsapp ||
-      !email ||
+      !telegram ||
       !plan_name ||
       !amount ||
       !payment_method
@@ -51,8 +51,8 @@ ${name}
 📱 WhatsApp:
 ${whatsapp}
 
-📧 Email:
-${email}
+✈️ Telegram Username:
+${telegram}
 
 ⭐ Selected Plan:
 ${plan_name}
