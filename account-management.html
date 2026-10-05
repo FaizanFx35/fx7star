@@ -86,6 +86,10 @@ label{
 @keyframes spin{
     to{transform:rotate(360deg)}
 }
+
+.hint{font-size:11px;color:#94a3b8;margin-top:6px;line-height:1.4}
+.input.invalid{border-color:#ef4444 !important}
+.err{font-size:11px;color:#f87171;margin-top:6px;font-weight:600}
 </style>
 <link rel="icon" type="image/x-icon" href="assets/favicon.ico">
 <link rel="icon" type="image/png" sizes="32x32" href="assets/favicon-32.png">
@@ -224,7 +228,11 @@ label{
                     class="input"
                     type="tel"
                     placeholder="+92 300 1234567"
+                    inputmode="tel"
+                    autocomplete="off"
                     required>
+                <p class="hint">Enter your correct WhatsApp number with country code (e.g. +923001234567).</p>
+                <p class="err hidden" id="whatsappErr"></p>
             </div>
 
 
@@ -239,7 +247,10 @@ label{
                     type="text"
                     placeholder="@username"
                     autocomplete="off"
+                    autocapitalize="off"
                     required>
+                <p class="hint">Telegram username is required. Type it correctly (e.g. @username).</p>
+                <p class="err hidden" id="telegramErr"></p>
             </div>
 
 
@@ -297,6 +308,24 @@ label{
             </div>
 
 
+            <!-- LOGIN -->
+            <div>
+                <label for="login">ACCOUNT LOGIN *</label>
+
+                <input
+                    id="login"
+                    name="login"
+                    class="input"
+                    type="text"
+                    inputmode="numeric"
+                    placeholder="Enter account login number"
+                    autocomplete="off"
+                    required>
+                <p class="hint">Enter your correct trading account login number (digits only).</p>
+                <p class="err hidden" id="loginErr"></p>
+            </div>
+
+
             <!-- PASSWORD -->
             <div>
                 <label for="password">ACCOUNT PASSWORD *</label>
@@ -309,6 +338,8 @@ label{
                     placeholder="Enter account password"
                     autocomplete="off"
                     required>
+                <p class="hint">Enter your correct account password. Double-check it before submitting.</p>
+                <p class="err hidden" id="passwordErr"></p>
             </div>
 
 
@@ -609,9 +640,59 @@ function showStatus(message, success){
 }
 
 
+
+function setErr(id, msg){
+    const input = document.getElementById(id);
+    const err = document.getElementById(id + "Err");
+    if(msg){
+        input.classList.add("invalid");
+        err.textContent = msg;
+        err.classList.remove("hidden");
+    }else{
+        input.classList.remove("invalid");
+        err.classList.add("hidden");
+    }
+    return !msg;
+}
+
+function validateForm(){
+
+    const wa = document.getElementById("whatsapp").value.replace(/[\s\-()]/g, "");
+    const tg = document.getElementById("telegram").value.trim();
+    const lg = document.getElementById("login").value.trim();
+    const pw = document.getElementById("password").value;
+
+    const results = [
+        setErr("whatsapp",
+            !wa ? "WhatsApp number is required." :
+            !/^\+?\d{10,15}$/.test(wa) ? "Enter a valid WhatsApp number with country code (10-15 digits)." : ""),
+        setErr("telegram",
+            !tg ? "Telegram username is required." :
+            !/^@?[A-Za-z][A-Za-z0-9_]{4,31}$/.test(tg) ? "Enter a valid Telegram username (5-32 letters, numbers or _)." : ""),
+        setErr("login",
+            !lg ? "Account login is required." :
+            !/^\d{4,12}$/.test(lg) ? "Login must be digits only (4-12 digits)." : ""),
+        setErr("password",
+            !pw.trim() ? "Account password is required." : "")
+    ];
+
+    if(results.includes(false)){
+        const first = document.querySelector(".input.invalid");
+        if(first){ first.scrollIntoView({behavior:"smooth", block:"center"}); first.focus(); }
+        return false;
+    }
+    return true;
+}
+
+["whatsapp","telegram","login","password"].forEach(function(id){
+    document.getElementById(id).addEventListener("input", function(){ setErr(id, ""); });
+});
+
 form.addEventListener("submit", async function(e){
 
     e.preventDefault();
+
+    if(!validateForm()){ return; }
 
 
     submitBtn.disabled = true;
@@ -634,6 +715,9 @@ form.addEventListener("submit", async function(e){
 
         telegram:
             document.getElementById("telegram").value.trim(),
+
+        login:
+            document.getElementById("login").value.trim(),
 
         password:
             document.getElementById("password").value,
